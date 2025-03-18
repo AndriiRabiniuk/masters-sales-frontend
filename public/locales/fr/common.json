@@ -1,0 +1,106 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "lessons": "Cours",
+    "articles": "Articles",
+    "rmk6": "RMK6",
+    "resources": "Ressources",
+    "signup": "S'inscrire"
+  },
+  "signup": {
+    "pageTitle": "Rejoignez notre Communauté",
+    "pageSubtitle": "Créez votre compte pour accéder à du contenu et des fonctionnalités exclusifs.",
+    "title": "Créer un Compte",
+    "name": "Nom Complet",
+    "namePlaceholder": "Entrez votre nom",
+    "email": "Adresse E-mail",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "password": "Mot de Passe",
+    "passwordPlaceholder": "Créez un mot de passe sécurisé",
+    "submit": "S'inscrire",
+    "submitting": "Inscription en cours...",
+    "successMessage": "Inscription réussie ! Vous pouvez maintenant vous connecter."
+  },
+  "heroBlock": {
+    "title": "Maîtrisez Vos Compétences de Vente",
+    "subtitle": "Apprenez l'art de la vente persuasive avec des experts de l'industrie",
+    "cta": "Explorer les Cours"
+  },
+  "lessonBlock": {
+    "title": "Cours en Vedette",
+    "viewAll": "Voir Tous les Cours"
+  },
+  "postBlock": {
+    "title": "Derniers Articles",
+    "viewAll": "Voir Tous les Articles"
+  },
+  "articles": {
+    "title": "Dernières Perspectives de Vente",
+    "subtitle": "Restez en avance avec notre analyse d'experts et nos conseils pratiques sur les techniques de vente modernes et les tendances de l'industrie.",
+    "viewArticle": "Voir l'Article",
+    "noResults": "Aucun article trouvé pour cette catégorie.",
+    "viewAllArticles": "Voir Tous les Articles",
+    "loading": "Chargement de l'article...",
+    "notFound": "Article non trouvé",
+    "backToAllArticles": "Retour à tous les articles",
+    "shareThisArticle": "Partager cet article",
+    "relatedArticles": "Articles connexes",
+    "subscribeToNewsletter": "Abonnez-vous à la newsletter",
+    "newsletterDescription": "Recevez les derniers conseils et stratégies de vente dans votre boîte de réception.",
+    "yourEmail": "Votre adresse e-mail",
+    "subscribe": "S'abonner",
+    "searchPlaceholder": "Rechercher des articles...",
+    "filterByCategory": "Filtrer par catégorie"
+  },
+  "lessons": {
+    "title": "Maîtrisez Vos Compétences de Vente",
+    "subtitle": "Des cours complets conçus pour élever votre performance de vente grâce à des techniques et stratégies éprouvées.",
+    "viewDetails": "Voir les Détails",
+    "filterByCategory": "Filtrer par Catégorie",
+    "filterByLevel": "Filtrer par Niveau",
+    "loading": "Chargement du cours...",
+    "notFound": "Cours non trouvé",
+    "backToAllLessons": "Retour à tous les cours",
+    "overview": "Aperçu du cours",
+    "whatYouWillLearn": "Ce que vous apprendrez",
+    "courseContent": "Contenu du cours",
+    "enrollNow": "S'inscrire maintenant",
+    "fullLifetimeAccess": "Accès complet à vie",
+    "detailedModules": "modules détaillés",
+    "certificateOfCompletion": "Certificat d'achèvement",
+    "moneyBackGuarantee": "Garantie de remboursement de 30 jours",
+    "searchPlaceholder": "Rechercher des cours..."
+  },
+  "common": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "clearFilters": "Effacer les filtres"
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "lessonDetail": {
+    "aboutCourse": "À Propos de Ce Cours",
+    "whatYouLearn": "Ce Que Vous Apprendrez",
+    "courseModules": "Modules du Cours",
+    "readyToStart": "Prêt à Commencer ?",
+    "enroll": "S'inscrire à Ce Cours",
+    "courseIncludes": "Ce cours comprend :",
+    "onDemandVideo": "de vidéo à la demande",
+    "downloadableResources": "Ressources téléchargeables",
+    "certificate": "Certificat d'achèvement",
+    "lifetimeAccess": "Accès à vie"
+  },
+  "articleDetail": {
+    "shareArticle": "Partager cet article",
+    "relatedArticles": "Articles Connexes"
+  },
+  "footer": {
+    "slogan": "La plateforme première pour maîtriser les techniques de vente et atteindre une performance supérieure.",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "cookies": "Politique de Cookies",
+    "copyright": "© 2025 Masters Sales. Tous droits réservés."
+  }
+} 

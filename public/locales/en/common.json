@@ -1,0 +1,106 @@
+{
+  "navbar": {
+    "home": "Home",
+    "lessons": "Lessons",
+    "articles": "Articles",
+    "rmk6": "RMK6",
+    "resources": "Resources",
+    "signup": "Sign Up"
+  },
+  "signup": {
+    "pageTitle": "Join our Community",
+    "pageSubtitle": "Create your account to access exclusive content and features.",
+    "title": "Create an Account",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Create a secure password",
+    "submit": "Sign Up",
+    "submitting": "Signing up...",
+    "successMessage": "Registration successful! You can now log in."
+  },
+  "heroBlock": {
+    "title": "Master Your Sales Skills",
+    "subtitle": "Learn the art of persuasive selling from industry experts",
+    "cta": "Explore Courses"
+  },
+  "lessonBlock": {
+    "title": "Featured Courses",
+    "viewAll": "View All Courses"
+  },
+  "postBlock": {
+    "title": "Latest Articles",
+    "viewAll": "View All Articles"
+  },
+  "articles": {
+    "title": "Latest Sales Insights",
+    "subtitle": "Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.",
+    "viewArticle": "View Article",
+    "noResults": "No articles found for this category.",
+    "viewAllArticles": "View All Articles",
+    "loading": "Loading article...",
+    "notFound": "Article not found",
+    "backToAllArticles": "Back to All Articles",
+    "shareThisArticle": "Share this article",
+    "relatedArticles": "Related Articles",
+    "subscribeToNewsletter": "Subscribe to Newsletter",
+    "newsletterDescription": "Get the latest sales tips and strategies delivered to your inbox.",
+    "yourEmail": "Your email address",
+    "subscribe": "Subscribe",
+    "searchPlaceholder": "Search articles...",
+    "filterByCategory": "Filter by Category"
+  },
+  "lessons": {
+    "title": "Master Your Sales Skills",
+    "subtitle": "Comprehensive courses designed to elevate your sales performance through proven techniques and strategies.",
+    "viewDetails": "View Details",
+    "filterByCategory": "Filter by Category",
+    "filterByLevel": "Filter by Level",
+    "loading": "Loading course...",
+    "notFound": "Course not found",
+    "backToAllLessons": "Back to All Lessons",
+    "overview": "Course Overview",
+    "whatYouWillLearn": "What You Will Learn",
+    "courseContent": "Course Content",
+    "enrollNow": "Enroll Now",
+    "fullLifetimeAccess": "Full Lifetime Access",
+    "detailedModules": "detailed modules",
+    "certificateOfCompletion": "Certificate of Completion",
+    "moneyBackGuarantee": "30-day money-back guarantee",
+    "searchPlaceholder": "Search courses..."
+  },
+  "common": {
+    "previous": "Previous",
+    "next": "Next",
+    "clearFilters": "Clear Filters"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "lessonDetail": {
+    "aboutCourse": "About This Course",
+    "whatYouLearn": "What You'll Learn",
+    "courseModules": "Course Modules",
+    "readyToStart": "Ready to Start?",
+    "enroll": "Enroll in This Course",
+    "courseIncludes": "This course includes:",
+    "onDemandVideo": "of on-demand video",
+    "downloadableResources": "Downloadable resources",
+    "certificate": "Certificate of completion",
+    "lifetimeAccess": "Lifetime access"
+  },
+  "articleDetail": {
+    "shareArticle": "Share this article",
+    "relatedArticles": "Related Articles"
+  },
+  "footer": {
+    "slogan": "The premier platform for mastering sales techniques and achieving higher performance.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "copyright": "© 2025 Masters Sales. All rights reserved."
+  }
+} 
