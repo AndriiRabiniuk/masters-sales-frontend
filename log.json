@@ -1,1 +1,1 @@
-Implement pagination and category filtering in Articles and Lessons pages.
+Refactor LessonBlock, PostBlock, and Navbar components to incorporate Next.js Link for improved navigation.
