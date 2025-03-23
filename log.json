@@ -1,1 +1,1 @@
-Refactor Navbar and HeroBlock components for improved mobile responsiveness and styling.
+Refactor LessonBlock, PostBlock, and Navbar components to incorporate Next.js Link for improved navigation.
