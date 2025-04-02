@@ -85,7 +85,7 @@ const ArticlesPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentArticles.map((post, index) => (
-            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group">
+            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group cursor-pointer">
               <Link href={`/articles/${post.id}`} className="h-48 overflow-hidden relative block">
                 <div 
                   className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
@@ -130,7 +130,7 @@ const ArticlesPage = () => {
                   </div>
                 </div>
                 <Link href={`/articles/${post.id}`}>
-                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto">
+                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto cursor-pointer">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -147,7 +147,7 @@ const ArticlesPage = () => {
             <p className="text-gray-400 text-lg">No articles found for this category.</p>
             <Button 
               variant="outline" 
-              className="mt-4 border-white text-white hover:bg-white hover:text-black"
+              className="mt-4 border-white text-white hover:bg-white hover:text-black cursor-pointer"
               onClick={() => handleCategoryChange('All')}
             >
               View All Articles
@@ -160,7 +160,7 @@ const ArticlesPage = () => {
           <div className="mt-12 flex justify-center items-center space-x-2">
             <Button 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
@@ -172,10 +172,10 @@ const ArticlesPage = () => {
                 <Button
                   key={number}
                   variant={currentPage === number ? "default" : "outline"}
-                  className={currentPage === number 
+                  className={`cursor-pointer ${currentPage === number 
                     ? "bg-white text-black hover:bg-gray-200" 
                     : "border-white text-white hover:bg-white hover:text-black"
-                  }
+                  }`}
                   onClick={() => goToPage(number)}
                 >
                   {number}
@@ -185,7 +185,7 @@ const ArticlesPage = () => {
             
             <Button 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >

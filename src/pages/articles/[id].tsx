@@ -43,7 +43,7 @@ const ArticleDetailPage = () => {
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <div className="text-white text-center">
           <h1 className="text-2xl font-bold mb-4">Loading article...</h1>
-          <Button variant="outline" className="border-white text-white" onClick={() => router.push('/articles')}>
+          <Button variant="outline" className="border-white text-white cursor-pointer" onClick={() => router.push('/articles')}>
             Back to All Articles
           </Button>
         </div>
@@ -64,7 +64,7 @@ const ArticleDetailPage = () => {
         <div className="container mx-auto px-6 relative h-full flex flex-col justify-end pb-12">
           <div className="flex gap-2 mb-4 flex-wrap">
             {post.categories.map((category, i) => (
-              <Badge key={i} variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
+              <Badge key={i} variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
                 {category}
               </Badge>
             ))}
@@ -103,13 +103,13 @@ const ArticleDetailPage = () => {
             <div className="mt-12 pt-8 border-t border-zinc-800">
               <h3 className="text-xl font-bold text-white mb-4">Share this article</h3>
               <div className="flex gap-4">
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
                   Twitter
                 </Button>
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
                   LinkedIn
                 </Button>
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
                   Facebook
                 </Button>
               </div>
@@ -119,10 +119,10 @@ const ArticleDetailPage = () => {
               <h3 className="text-xl font-bold text-white mb-6">Related Articles</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {relatedArticles.map((article, index) => (
-                  <div key={index} className="flex space-x-4">
+                  <div key={index} className="flex space-x-4 cursor-pointer" onClick={() => router.push(`/articles/${article.id}`)}>
                     <div className="h-20 w-20 bg-zinc-800 flex-shrink-0"></div>
                     <div>
-                      <h4 className="text-white font-medium mb-1 hover:text-gray-300 cursor-pointer" onClick={() => router.push(`/articles/${article.id}`)}>
+                      <h4 className="text-white font-medium mb-1 hover:text-gray-300 cursor-pointer">
                         {article.title}
                       </h4>
                       <p className="text-gray-500 text-sm">{article.date}</p>

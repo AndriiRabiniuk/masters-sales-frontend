@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="mr-4">
+            <Link href="/" className="mr-4 cursor-pointer">
               <div className="relative h-12 w-12 overflow-hidden rounded-full border border-white/20 bg-black/50 backdrop-blur-sm">
                 <Image 
                   src="/logo.jpg"
@@ -32,13 +32,13 @@ const Navbar = () => {
             <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
             <SimpleNavLink href="/resources">Resources</SimpleNavLink>
             <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
-            <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors">
+            <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
               EN/FR
             </Button>
           </div>
           
           <button 
-            className="md:hidden text-white focus:outline-none hover:text-gray-300 transition-colors"
+            className="md:hidden text-white focus:outline-none hover:text-gray-300 transition-colors cursor-pointer"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,7 +57,7 @@ const Navbar = () => {
               <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
               <SimpleNavLink href="/resources">Resources</SimpleNavLink>
               <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
-              <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors mt-2">
+              <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors mt-2 cursor-pointer">
                 EN/FR
               </Button>
             </div>
@@ -77,7 +77,7 @@ const SimpleNavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   return (
     <Link 
       href={href} 
-      className="text-white hover:text-gray-300 transition-colors font-medium relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full"
+      className="text-white hover:text-gray-300 transition-colors font-medium relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full cursor-pointer"
     >
       {children}
     </Link>

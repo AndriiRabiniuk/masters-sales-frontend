@@ -19,7 +19,7 @@ const LessonDetailPage = () => {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-white text-center">
           <h1 className="text-2xl font-bold mb-4">Loading lesson...</h1>
-          <Button variant="outline" className="border-white text-white" onClick={() => router.push('/lessons')}>
+          <Button variant="outline" className="border-white text-white cursor-pointer" onClick={() => router.push('/lessons')}>
             Back to All Lessons
           </Button>
         </div>
@@ -79,14 +79,14 @@ const LessonDetailPage = () => {
               <h2 className="text-2xl font-bold text-white mb-4">Course Modules</h2>
               <div className="space-y-4">
                 {lesson.moduleDetails?.map((module, index) => (
-                  <Card key={index} className="bg-zinc-900 border border-zinc-800">
+                  <Card key={index} className="bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-white/20 transition-all">
                     <CardContent className="p-4">
                       <div className="flex justify-between items-center">
                         <div>
                           <h3 className="text-lg font-bold text-white mb-1">Module {index + 1}: {module.title}</h3>
                           <p className="text-gray-400 text-sm">{module.duration}</p>
                         </div>
-                        <Button variant="ghost" className="text-white hover:text-black hover:bg-white">
+                        <Button variant="ghost" className="text-white hover:text-black hover:bg-white cursor-pointer">
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                           </svg>
@@ -104,7 +104,7 @@ const LessonDetailPage = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-white mb-4">Ready to Start?</h3>
                 <p className="text-gray-400 mb-6">Enroll now to gain access to all course materials and start improving your sales skills today.</p>
-                <Button className="w-full bg-white text-black hover:bg-gray-200">
+                <Button className="w-full bg-white text-black hover:bg-gray-200 cursor-pointer">
                   Enroll in This Course
                 </Button>
                 <div className="mt-6">

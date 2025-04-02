@@ -58,29 +58,33 @@ const LessonsPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentLessons.map((lesson, index) => (
-            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full">
-              <div className="h-48 overflow-hidden relative">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
-                  style={{ backgroundImage: `url(${lesson.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-                <div className="absolute top-4 left-4">
-                  <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
-                    {lesson.level}
-                  </Badge>
+            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
+              <Link href={`/lessons/${lesson.id}`} className="block">
+                <div className="h-48 overflow-hidden relative">
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
+                    style={{ backgroundImage: `url(${lesson.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
+                  <div className="absolute top-4 left-4">
+                    <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
+                      {lesson.level}
+                    </Badge>
+                  </div>
                 </div>
-              </div>
+              </Link>
               
-              <CardHeader className="pb-0">
-                <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                  {lesson.title}
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="py-4">
-                <p className="text-gray-400">{lesson.description}</p>
-              </CardContent>
+              <Link href={`/lessons/${lesson.id}`} className="block">
+                <CardHeader className="pb-0">
+                  <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                    {lesson.title}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="py-4">
+                  <p className="text-gray-400">{lesson.description}</p>
+                </CardContent>
+              </Link>
               
               <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
                 <div className="flex items-center">
@@ -91,7 +95,7 @@ const LessonsPage = () => {
                 <Link href={`/lessons/${lesson.id}`}>
                   <Button 
                     variant="outline" 
-                    className="text-white border-zinc-700 hover:bg-white hover:text-black"
+                    className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer"
                   >
                     View Details
                   </Button>
@@ -106,7 +110,7 @@ const LessonsPage = () => {
           <div className="mt-12 flex justify-center items-center space-x-2">
             <Button 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
@@ -118,10 +122,10 @@ const LessonsPage = () => {
                 <Button
                   key={number}
                   variant={currentPage === number ? "default" : "outline"}
-                  className={currentPage === number 
+                  className={`cursor-pointer ${currentPage === number 
                     ? "bg-white text-black hover:bg-gray-200" 
                     : "border-white text-white hover:bg-white hover:text-black"
-                  }
+                  }`}
                   onClick={() => goToPage(number)}
                 >
                   {number}
@@ -131,7 +135,7 @@ const LessonsPage = () => {
             
             <Button 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
