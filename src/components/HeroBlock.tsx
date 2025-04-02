@@ -36,14 +36,14 @@ const HeroBlock = () => {
             <Button
               size="lg"
               variant="default"
-              className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-lg font-medium"
+              className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-lg font-medium cursor-pointer"
             >
               Start Training
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-black rounded-md px-8 py-6 text-lg font-medium"
+              className="border-white text-white hover:bg-white hover:text-black rounded-md px-8 py-6 text-lg font-medium cursor-pointer"
             >
               Learn More
             </Button>
@@ -52,9 +52,9 @@ const HeroBlock = () => {
 
         <Tabs defaultValue="features" className="w-full max-w-4xl">
           <TabsList className="grid w-full grid-cols-3 bg-black/30 backdrop-blur-sm border border-white/10">
-            <TabsTrigger value="features" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Features</TabsTrigger>
-            <TabsTrigger value="statistics" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Statistics</TabsTrigger>
-            <TabsTrigger value="testimonials" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Testimonials</TabsTrigger>
+            <TabsTrigger value="features" className="text-white data-[state=active]:bg-white data-[state=active]:text-black cursor-pointer">Features</TabsTrigger>
+            <TabsTrigger value="statistics" className="text-white data-[state=active]:bg-white data-[state=active]:text-black cursor-pointer">Statistics</TabsTrigger>
+            <TabsTrigger value="testimonials" className="text-white data-[state=active]:bg-white data-[state=active]:text-black cursor-pointer">Testimonials</TabsTrigger>
           </TabsList>
 
           <TabsContent value="features" className="mt-6">

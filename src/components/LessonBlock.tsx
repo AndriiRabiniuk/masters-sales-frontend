@@ -25,7 +25,7 @@ const LessonBlock = () => {
             </p>
           </div>
           <Link href="/lessons">
-            <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black">
+            <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black cursor-pointer">
               View All Courses
             </Button>
           </Link>
@@ -38,29 +38,31 @@ const LessonBlock = () => {
             <CarouselContent className="-ml-4">
               {lessons.map((lesson, index) => (
                 <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full">
-                    <div className="h-48 overflow-hidden relative">
+                  <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
+                    <Link href={`/lessons/${lesson.id}`} className="h-48 overflow-hidden relative block">
                       <div 
                         className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
                         style={{ backgroundImage: `url(${lesson.image})` }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
                       <div className="absolute top-4 left-4">
-                        <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
+                        <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
                           {lesson.level}
                         </Badge>
                       </div>
-                    </div>
+                    </Link>
                     
-                    <CardHeader className="pb-0">
-                      <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                        {lesson.title}
-                      </CardTitle>
-                    </CardHeader>
-                    
-                    <CardContent className="py-4">
-                      <p className="text-gray-400">{lesson.description}</p>
-                    </CardContent>
+                    <Link href={`/lessons/${lesson.id}`} className="block cursor-pointer">
+                      <CardHeader className="pb-0">
+                        <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                          {lesson.title}
+                        </CardTitle>
+                      </CardHeader>
+                      
+                      <CardContent className="py-4">
+                        <p className="text-gray-400">{lesson.description}</p>
+                      </CardContent>
+                    </Link>
                     
                     <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
                       <div className="flex items-center">
@@ -69,7 +71,7 @@ const LessonBlock = () => {
                         <span className="text-sm text-gray-400">{lesson.modules} modules</span>
                       </div>
                       <Link href={`/lessons/${lesson.id}`}>
-                        <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                        <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
                           View Details
                         </Button>
                       </Link>
@@ -79,15 +81,15 @@ const LessonBlock = () => {
               ))}
             </CarouselContent>
             <div className="flex justify-center mt-8">
-              <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2" />
-              <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black" />
+              <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2 cursor-pointer" />
+              <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black cursor-pointer" />
             </div>
           </Carousel>
         </ScrollArea>
         
         <div className="mt-16 text-center">
           <Link href="/lessons">
-            <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6" size="lg">
+            <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 cursor-pointer" size="lg">
               View All Lessons
             </Button>
           </Link>

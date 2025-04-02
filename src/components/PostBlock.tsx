@@ -18,7 +18,7 @@ const PostBlock = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post, index) => (
-            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group">
+            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group cursor-pointer">
               <Link href={`/articles/${post.id}`} className="h-48 overflow-hidden relative block">
                 <div 
                   className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
@@ -30,7 +30,7 @@ const PostBlock = () => {
               <CardHeader className="pb-0 pt-6">
                 <div className="flex gap-2 mb-3">
                   {post.categories.map((category, i) => (
-                    <Badge key={i} variant="outline" className="border-zinc-700 text-gray-300 hover:text-white">
+                    <Badge key={i} variant="outline" className="border-zinc-700 text-gray-300 hover:text-white cursor-pointer">
                       {category}
                     </Badge>
                   ))}
@@ -55,7 +55,7 @@ const PostBlock = () => {
                   </div>
                 </div>
                 <Link href={`/articles/${post.id}`}>
-                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto">
+                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto cursor-pointer">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -68,7 +68,7 @@ const PostBlock = () => {
         
         <div className="mt-12 text-center">
           <Link href="/articles">
-            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2">
+            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2 cursor-pointer">
               View All Articles
             </Button>
           </Link>
