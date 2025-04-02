@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <header className="bg-transparent text-white absolute w-full z-10">
+    <motion.header 
+      className="bg-transparent text-white absolute w-full z-10"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
+          {/* Logo */}
+          <motion.div 
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+          >
             <Link href="/" className="mr-4 cursor-pointer">
               <div className="relative h-12 w-12 overflow-hidden rounded-full border border-white/20 bg-black/50 backdrop-blur-sm">
                 <Image 
@@ -23,63 +37,118 @@ const Navbar = () => {
               </div>
             </Link>
             <span className="text-white font-bold text-xl tracking-wider">MASTER SALES TRAINING</span>
-          </div>
+          </motion.div>
           
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
-            <SimpleNavLink href="/">Home</SimpleNavLink>
-            <SimpleNavLink href="/lessons">Lessons</SimpleNavLink>
-            <SimpleNavLink href="/articles">Articles</SimpleNavLink>
-            <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
-            <SimpleNavLink href="/resources">Resources</SimpleNavLink>
-            <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
-            <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
-              EN/FR
-            </Button>
+            {[
+              { href: "/", label: "Home" },
+              { href: "/lessons", label: "Lessons" },
+              { href: "/articles", label: "Articles" },
+              { href: "/rmk6", label: "RMK6" },
+              { href: "/resources", label: "Resources" },
+              { href: "/login", label: "Login/sign" }
+            ].map((link, i) => (
+              <motion.div 
+                key={link.href}
+                initial={{ opacity: 0, y: -10 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <SimpleNavLink href={link.href} label={link.label} />
+              </motion.div>
+            ))}
+            <motion.div 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
+              >
+                EN/FR
+              </Button>
+            </motion.div>
           </div>
           
-          <button 
+          {/* Mobile Menu Button */}
+          <motion.button 
             className="md:hidden text-white focus:outline-none hover:text-gray-300 transition-colors cursor-pointer"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={toggleMenu}
+            whileTap={{ scale: 0.9 }}
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-          </button>
+          </motion.button>
         </div>
-
+        
         {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 bg-black/70 backdrop-blur-md rounded-lg p-4 animate-in slide-in-from-top-5">
-            <div className="flex flex-col space-y-3">
-              <SimpleNavLink href="/">Home</SimpleNavLink>
-              <SimpleNavLink href="/lessons">Lessons</SimpleNavLink>
-              <SimpleNavLink href="/articles">Articles</SimpleNavLink>
-              <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
-              <SimpleNavLink href="/resources">Resources</SimpleNavLink>
-              <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
-              <Button variant="outline" size="sm" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors mt-2 cursor-pointer">
-                EN/FR
-              </Button>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              className="md:hidden mt-4 pb-4 bg-black/70 backdrop-blur-md rounded-lg p-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex flex-col space-y-3">
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/lessons", label: "Lessons" },
+                  { href: "/articles", label: "Articles" },
+                  { href: "/rmk6", label: "RMK6" },
+                  { href: "/resources", label: "Resources" },
+                  { href: "/login", label: "Login/sign" }
+                ].map((link, i) => (
+                  <motion.div 
+                    key={link.href}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ type: "spring", stiffness: 300, delay: i * 0.05 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <SimpleNavLink href={link.href} label={link.label} />
+                  </motion.div>
+                ))}
+                <motion.div 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors mt-2 cursor-pointer"
+                  >
+                    EN/FR
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
 interface NavLinkProps {
   href: string;
-  children: React.ReactNode;
+  label: string;
 }
 
-const SimpleNavLink: React.FC<NavLinkProps> = ({ href, children }) => {
+const SimpleNavLink = ({ href, label }: NavLinkProps) => {
   return (
     <Link 
       href={href} 
       className="text-white hover:text-gray-300 transition-colors font-medium relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full cursor-pointer"
     >
-      {children}
+      {label}
     </Link>
   );
 };

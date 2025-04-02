@@ -12,88 +12,169 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { motion } from 'framer-motion';
 
 const LessonBlock = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 }
+    }
+  };
+
   return (
     <div className="bg-black text-white py-24">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between mb-16">
+        <motion.div 
+          className="flex flex-col md:flex-row items-center justify-between mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+        >
           <div>
-            <h2 className="text-4xl font-bold">Master Your Sales Skills</h2>
-            <p className="text-gray-400 text-xl mt-4 max-w-2xl">
+            <motion.h2 
+              className="text-4xl font-bold"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Master Your Sales Skills
+            </motion.h2>
+            <motion.p 
+              className="text-gray-400 text-xl mt-4 max-w-2xl"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               Carefully crafted lessons to elevate your sales performance through proven techniques and strategies.
-            </p>
+            </motion.p>
           </div>
-          <Link href="/lessons">
-            <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black cursor-pointer">
-              View All Courses
-            </Button>
-          </Link>
-        </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="/lessons">
+              <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black cursor-pointer">
+                View All Courses
+              </Button>
+            </Link>
+          </motion.div>
+        </motion.div>
         
         <Separator className="bg-white/10 mb-12" />
         
-        <ScrollArea className="w-full" type="always">
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-4">
-              {lessons.map((lesson, index) => (
-                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
-                    <Link href={`/lessons/${lesson.id}`} className="h-48 overflow-hidden relative block">
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
-                        style={{ backgroundImage: `url(${lesson.image})` }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
-                          {lesson.level}
-                        </Badge>
-                      </div>
-                    </Link>
-                    
-                    <Link href={`/lessons/${lesson.id}`} className="block cursor-pointer">
-                      <CardHeader className="pb-0">
-                        <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                          {lesson.title}
-                        </CardTitle>
-                      </CardHeader>
-                      
-                      <CardContent className="py-4">
-                        <p className="text-gray-400">{lesson.description}</p>
-                      </CardContent>
-                    </Link>
-                    
-                    <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
-                      <div className="flex items-center">
-                        <span className="text-sm text-gray-400">{lesson.duration}</span>
-                        <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
-                        <span className="text-sm text-gray-400">{lesson.modules} modules</span>
-                      </div>
-                      <Link href={`/lessons/${lesson.id}`}>
-                        <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                          View Details
-                        </Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-8">
-              <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2 cursor-pointer" />
-              <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black cursor-pointer" />
-            </div>
-          </Carousel>
-        </ScrollArea>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <ScrollArea className="w-full" type="always">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-4">
+                {lessons.map((lesson, index) => (
+                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      whileHover={{ y: -8 }}
+                    >
+                      <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
+                        <Link href={`/lessons/${lesson.id}`} className="h-48 overflow-hidden relative block">
+                          <motion.div 
+                            className="absolute inset-0 bg-cover bg-center filter grayscale"
+                            style={{ backgroundImage: `url(${lesson.image})` }}
+                            whileHover={{ scale: 1.1, filter: "grayscale(70%)" }}
+                            transition={{ duration: 0.4 }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
+                          <div className="absolute top-4 left-4">
+                            <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
+                              {lesson.level}
+                            </Badge>
+                          </div>
+                        </Link>
+                        
+                        <Link href={`/lessons/${lesson.id}`} className="block cursor-pointer">
+                          <CardHeader className="pb-0">
+                            <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                              {lesson.title}
+                            </CardTitle>
+                          </CardHeader>
+                          
+                          <CardContent className="py-4">
+                            <p className="text-gray-400">{lesson.description}</p>
+                          </CardContent>
+                        </Link>
+                        
+                        <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                          <div className="flex items-center">
+                            <span className="text-sm text-gray-400">{lesson.duration}</span>
+                            <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
+                            <span className="text-sm text-gray-400">{lesson.modules} modules</span>
+                          </div>
+                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Link href={`/lessons/${lesson.id}`}>
+                              <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
+                                View Details
+                              </Button>
+                            </Link>
+                          </motion.div>
+                        </CardFooter>
+                      </Card>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-center mt-8">
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2 cursor-pointer" />
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black cursor-pointer" />
+                </motion.div>
+              </div>
+            </Carousel>
+          </ScrollArea>
+        </motion.div>
         
-        <div className="mt-16 text-center">
-          <Link href="/lessons">
-            <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 cursor-pointer" size="lg">
-              View All Lessons
-            </Button>
-          </Link>
-        </div>
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link href="/lessons">
+              <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 cursor-pointer" size="lg">
+                View All Lessons
+              </Button>
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
