@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +7,41 @@ import { Separator } from '@/components/ui/separator';
 import Navbar from '@/components/Navbar';
 
 const LessonsPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const lessonsPerPage = 6;
+  
+  // Calculate pagination values
+  const indexOfLastLesson = currentPage * lessonsPerPage;
+  const indexOfFirstLesson = indexOfLastLesson - lessonsPerPage;
+  const currentLessons = lessons.slice(indexOfFirstLesson, indexOfLastLesson);
+  const totalPages = Math.ceil(lessons.length / lessonsPerPage);
+  
+  // Handle page changes
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  };
+  
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  };
+  
+  const goToPage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+  
+  // Generate page numbers to display
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+  
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
@@ -21,7 +57,7 @@ const LessonsPage = () => {
         <Separator className="bg-white/10 mb-12" />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lessons.map((lesson, index) => (
+          {currentLessons.map((lesson, index) => (
             <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full">
               <div className="h-48 overflow-hidden relative">
                 <div 
@@ -52,17 +88,57 @@ const LessonsPage = () => {
                   <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
                   <span className="text-sm text-gray-400">{lesson.modules} modules</span>
                 </div>
-                <Button 
-                  variant="outline" 
-                  className="text-white border-zinc-700 hover:bg-white hover:text-black"
-                  onClick={() => window.location.href = `/lessons/${lesson.id}`}
-                >
-                  View Details
-                </Button>
+                <Link href={`/lessons/${lesson.id}`}>
+                  <Button 
+                    variant="outline" 
+                    className="text-white border-zinc-700 hover:bg-white hover:text-black"
+                  >
+                    View Details
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}
         </div>
+        
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-12 flex justify-center items-center space-x-2">
+            <Button 
+              variant="outline" 
+              className="border-white text-white hover:bg-white hover:text-black"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            
+            <div className="flex space-x-2">
+              {pageNumbers.map(number => (
+                <Button
+                  key={number}
+                  variant={currentPage === number ? "default" : "outline"}
+                  className={currentPage === number 
+                    ? "bg-white text-black hover:bg-gray-200" 
+                    : "border-white text-white hover:bg-white hover:text-black"
+                  }
+                  onClick={() => goToPage(number)}
+                >
+                  {number}
+                </Button>
+              ))}
+            </div>
+            
+            <Button 
+              variant="outline" 
+              className="border-white text-white hover:bg-white hover:text-black"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -122,6 +198,33 @@ const lessons = [
     level: "Advanced",
     duration: "10 hours",
     modules: 12
+  },
+  {
+    id: "sales-pipeline-management",
+    title: "Sales Pipeline Management",
+    description: "Optimize your sales pipeline with proven strategies to ensure a consistent flow of qualified opportunities.",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Pipeline+Management",
+    level: "Intermediate",
+    duration: "4 hours",
+    modules: 5
+  },
+  {
+    id: "sales-psychology-mastery",
+    title: "Sales Psychology Mastery",
+    description: "Understand and apply psychological principles to influence buying decisions and improve sales results.",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Psychology",
+    level: "Advanced",
+    duration: "7 hours",
+    modules: 8
+  },
+  {
+    id: "value-based-selling",
+    title: "Value-Based Selling",
+    description: "Move beyond price discussions by focusing on the unique value your solutions provide to customers.",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Value+Selling",
+    level: "Intermediate",
+    duration: "5 hours",
+    modules: 6
   }
 ];
 
