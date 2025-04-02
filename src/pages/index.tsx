@@ -59,9 +59,9 @@ export default function Home() {
                 <ul className="space-y-2">
                   {[
                     { label: "Home", href: "#" },
-                    { label: "Train", href: "#" },
-                    { label: "RMK6", href: "#" },
-                    { label: "Resources", href: "#" }
+                    { label: "Train", href: "/lessons" },
+                    { label: "RMK6", href: "http://3.135.221.43:3000/" },
+                    { label: "Resources", href: "/articles" }
                   ].map((link, i) => (
                     <motion.li 
                       key={i}
