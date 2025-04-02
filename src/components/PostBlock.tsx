@@ -1,95 +1,101 @@
 import React from 'react';
-import Image from 'next/image';
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
 
 const PostBlock = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-blue-50">
+    <div className="bg-zinc-950 text-white py-20">
       <div className="container mx-auto px-6">
-        <h2 className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold text-2xl mb-8 pb-2 border-b-2 border-indigo-200">Latest Post Block</h2>
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold mb-4">Latest Insights</h2>
+          <div className="h-1 w-20 bg-white mb-6"></div>
+          <p className="text-gray-400 max-w-2xl">
+            Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.
+          </p>
+        </div>
         
-        <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-xl bg-white">
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-2/3 p-8 md:p-10">
-              <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 leading-tight">
-                Building Modern UIs: A Deep Dive into Shadcn and React Components
-              </CardTitle>
-              
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-blue-600 flex items-center justify-center text-white font-bold">
-                    SC
-                  </div>
-                  <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-indigo-600 flex items-center justify-center text-white font-bold">
-                    MJ
-                  </div>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-700 mr-2">Sarah Chen</span>
-                  <span className="text-gray-400">•</span>
-                  <span className="text-gray-500 ml-2">15 Feb 2024</span>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {posts.map((post, index) => (
+            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group">
+              <div className="h-48 overflow-hidden relative">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
+                  style={{ backgroundImage: `url(${post.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
               </div>
               
-              <CardDescription className="text-gray-600 text-base leading-relaxed mb-6">
-                Join us for an in-depth exploration of building modern user interfaces using shadcn/ui and React. 
-                Learn best practices and advanced techniques that will transform your development workflow.
-                <span className="block mt-4 text-gray-500">
-                  Topics covered: component design, state management, UI patterns, and accessibility.
-                </span>
-              </CardDescription>
+              <CardHeader className="pb-0 pt-6">
+                <div className="flex gap-2 mb-3">
+                  {post.categories.map((category, i) => (
+                    <Badge key={i} variant="outline" className="border-zinc-700 text-gray-300 hover:text-white">
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+                <h3 className="text-xl font-bold text-white group-hover:text-gray-200">
+                  {post.title}
+                </h3>
+              </CardHeader>
               
-              <div className="flex flex-wrap gap-2 mb-8">
-                <Badge>React</Badge>
-                <Badge>Shadcn</Badge>
-                <Badge>UI Design</Badge>
-                <Badge>Components</Badge>
-              </div>
+              <CardContent className="py-4">
+                <p className="text-gray-400 line-clamp-3">{post.excerpt}</p>
+              </CardContent>
               
-              <Button variant="ghost" className="group text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 font-medium">
-                Read more
-                <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Button>
-            </div>
-            
-            <div className="w-full md:w-1/3 relative">
-              <Image 
-                src="/post-image.jpg" 
-                alt="Modern UI Development"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 to-transparent"></div>
-              <div className="absolute bottom-4 right-4">
-                <div className="flex space-x-2">
-                  <div className="bg-white rounded-full p-2 shadow-md">
-                    <svg className="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M10.975 14.51a.5.5 0 0 1 0-.7l2.845-2.845-2.845-2.845a.5.5 0 0 1 .707-.707l3.195 3.195a.5.5 0 0 1 0 .707l-3.195 3.195a.5.5 0 0 1-.707 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div className="bg-white rounded-full p-2 shadow-md">
-                    <svg className="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                    </svg>
+              <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                <div className="flex items-center">
+                  <div className="h-8 w-8 rounded-full bg-zinc-800 mr-2"></div>
+                  <div>
+                    <span className="text-sm text-white">{post.author}</span>
+                    <p className="text-xs text-gray-500">{post.date}</p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </Card>
+                <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+        
+        <div className="mt-12 text-center">
+          <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2">
+            View All Articles
+          </Button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-const Badge = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-block bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium">
-    {children}
-  </span>
-);
+const posts = [
+  {
+    title: "7 Psychological Triggers That Drive High-Value Sales",
+    excerpt: "Discover the key psychological principles that influence purchase decisions and learn how to ethically apply them in your sales conversations.",
+    image: "/post1.jpg",
+    categories: ["Psychology", "Sales"],
+    author: "Michael Carson",
+    date: "Feb 12, 2024",
+  },
+  {
+    title: "The Future of B2B Sales in a Digital-First Economy",
+    excerpt: "Explore how B2B sales is evolving with digital transformation and what strategies top-performing organizations are implementing to stay ahead.",
+    image: "/post2.jpg",
+    categories: ["B2B", "Strategy"],
+    author: "Sarah Chen",
+    date: "Jan 28, 2024",
+  },
+  {
+    title: "Building a Sales Process That Converts: A Step-by-Step Guide",
+    excerpt: "Follow this comprehensive framework to design a sales process that consistently guides prospects from awareness to closing with higher conversion rates.",
+    image: "/post3.jpg",
+    categories: ["Process", "Conversion"],
+    author: "David Miller",
+    date: "Jan 15, 2024",
+  }
+];
 
 export default PostBlock; 

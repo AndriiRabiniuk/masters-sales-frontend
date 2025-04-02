@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import HeroBlock from '@/components/HeroBlock';
 import LessonBlock from '@/components/LessonBlock';
 import PostBlock from '@/components/PostBlock';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,50 +20,16 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-white`}>
+    <div className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black`}>
       <main>
         <HeroBlock />
-        
-        <div className="bg-gradient-to-b from-blue-50 to-white py-16 flex justify-center items-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform cursor-pointer">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        
         <LessonBlock />
         <PostBlock />
         
-        <div className="py-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-center">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between">
-              <div className="flex-1 mb-6 sm:mb-0">
-                <h3 className="text-white font-bold text-xl mb-2">Content Storyblok Fetched</h3>
-                <p className="text-blue-100">All content is dynamically loaded from Storyblok CMS</p>
-              </div>
-              
-              <div className="flex-1 text-center mb-6 sm:mb-0">
-                <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white shadow-inner border border-white/20">
-                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  API Connected
-                </div>
-              </div>
-              
-              <div className="flex-1 text-right">
-                <div className="inline-flex">
-                  <span className="px-4 py-2 bg-blue-800 text-white font-medium rounded-l-lg">Latest Update</span>
-                  <span className="px-4 py-2 bg-white text-blue-800 font-medium rounded-r-lg">v1.0.5</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    
       </main>
       
-      <footer className="bg-gray-900 text-gray-400 py-12">
+      <footer className="bg-black text-gray-400 py-12 border-t border-white/10">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between">
             <div className="mb-8 md:mb-0">
@@ -99,7 +69,7 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-zinc-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p>© 2024 Masters Sales. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white">

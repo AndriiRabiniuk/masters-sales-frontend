@@ -1,75 +1,136 @@
 import React from 'react';
-import Image from 'next/image';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Separator } from './ui/separator';
+import { ScrollArea } from './ui/scroll-area';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
 
 const LessonBlock = () => {
   return (
-    <section className="py-16 bg-white">
+    <div className="bg-black text-white py-24">
       <div className="container mx-auto px-6">
-        <h2 className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 font-bold text-2xl mb-8 pb-2 border-b-2 border-blue-200">Latest Lesson Block</h2>
-        
-        <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-xl">
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-2/3 p-8 md:p-10">
-              <div className="flex items-center mb-4">
-                <div className="h-8 w-1 bg-blue-600 mr-3"></div>
-                <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800">
-                  Building Modern UIs: A Deep Dive into Shadcn and React
-                </CardTitle>
-              </div>
-              
-              <CardDescription className="text-gray-600 text-base leading-relaxed mb-6">
-                Join us for an in-depth exploration of building modern user interfaces using shadcn/ui and React. 
-                Learn best practices and advanced techniques that will transform your development workflow.
-              </CardDescription>
-              
-              <div className="flex items-center text-sm text-gray-500 mb-8 space-x-4">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <span className="font-medium text-gray-700">Sarah Chen</span>
-                </div>
-                
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <span className="font-medium text-gray-700">15 Feb 2024</span>
-                </div>
-              </div>
-              
-              <Button variant="ghost" className="group text-blue-600 hover:text-blue-800 hover:bg-blue-50 font-medium">
-                Read more
-                <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Button>
-            </div>
-            
-            <div className="w-full md:w-1/3 relative">
-              <Image 
-                src="/lesson-image.jpg" 
-                alt="Modern UI Development"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 bg-white text-blue-800 font-bold py-1 px-3 rounded-full text-sm shadow-md">
-                UI/UX
-              </div>
-            </div>
+        <div className="flex flex-col md:flex-row items-center justify-between mb-16">
+          <div>
+            <h2 className="text-4xl font-bold">Master Your Sales Skills</h2>
+            <p className="text-gray-400 text-xl mt-4 max-w-2xl">
+              Carefully crafted lessons to elevate your sales performance through proven techniques and strategies.
+            </p>
           </div>
-        </Card>
+          <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black">
+            View All Courses
+          </Button>
+        </div>
+        
+        <Separator className="bg-white/10 mb-12" />
+        
+        <ScrollArea className="w-full" type="always">
+          <Carousel className="w-full">
+            <CarouselContent className="-ml-4">
+              {lessons.map((lesson, index) => (
+                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full">
+                    <div className="h-48 overflow-hidden relative">
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
+                        style={{ backgroundImage: `url(${lesson.image})` }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
+                      <div className="absolute top-4 left-4">
+                        <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
+                          {lesson.level}
+                        </Badge>
+                      </div>
+                    </div>
+                    
+                    <CardHeader className="pb-0">
+                      <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                        {lesson.title}
+                      </CardTitle>
+                    </CardHeader>
+                    
+                    <CardContent className="py-4">
+                      <p className="text-gray-400">{lesson.description}</p>
+                    </CardContent>
+                    
+                    <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                      <div className="flex items-center">
+                        <span className="text-sm text-gray-400">{lesson.duration}</span>
+                        <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
+                        <span className="text-sm text-gray-400">{lesson.modules} modules</span>
+                      </div>
+                      <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                        Start
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8">
+              <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2" />
+              <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black" />
+            </div>
+          </Carousel>
+        </ScrollArea>
+        
+        <div className="mt-16 text-center">
+          <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6" size="lg">
+            View All Lessons
+          </Button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
+
+const lessons = [
+  {
+    title: "Fundamentals of Consultative Selling",
+    description: "Learn the core principles of consultative selling and how to build meaningful client relationships based on trust.",
+    image: "/lesson1.jpg",
+    level: "Beginner",
+    duration: "4 hours",
+    modules: 5
+  },
+  {
+    title: "Advanced Negotiation Tactics",
+    description: "Master high-stakes negotiation with advanced psychological techniques and strategic frameworks.",
+    image: "/lesson2.jpg",
+    level: "Advanced",
+    duration: "6 hours",
+    modules: 8
+  },
+  {
+    title: "Objection Handling Mastery",
+    description: "Turn rejections into opportunities with proven methods to address and overcome customer objections.",
+    image: "/lesson3.jpg",
+    level: "Intermediate",
+    duration: "3 hours",
+    modules: 4
+  },
+  {
+    title: "Sales Closing Techniques",
+    description: "Learn powerful closing techniques that feel natural and lead to higher conversion rates.",
+    image: "/lesson4.jpg",
+    level: "Intermediate",
+    duration: "5 hours",
+    modules: 6
+  },
+  {
+    title: "Digital Sales Strategies",
+    description: "Adapt your sales approach for the digital age with effective online communication tactics.",
+    image: "/lesson5.jpg",
+    level: "Advanced",
+    duration: "8 hours",
+    modules: 10
+  }
+];
 
 export default LessonBlock; 
