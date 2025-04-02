@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import { Badge } from '@/components/ui/badge';
 
 const PostBlock = () => {
   return (
@@ -75,7 +75,7 @@ const posts = [
   {
     title: "7 Psychological Triggers That Drive High-Value Sales",
     excerpt: "Discover the key psychological principles that influence purchase decisions and learn how to ethically apply them in your sales conversations.",
-    image: "/post1.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Psychology",
     categories: ["Psychology", "Sales"],
     author: "Michael Carson",
     date: "Feb 12, 2024",
@@ -83,7 +83,7 @@ const posts = [
   {
     title: "The Future of B2B Sales in a Digital-First Economy",
     excerpt: "Explore how B2B sales is evolving with digital transformation and what strategies top-performing organizations are implementing to stay ahead.",
-    image: "/post2.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=B2B+Digital+Sales",
     categories: ["B2B", "Strategy"],
     author: "Sarah Chen",
     date: "Jan 28, 2024",
@@ -91,7 +91,7 @@ const posts = [
   {
     title: "Building a Sales Process That Converts: A Step-by-Step Guide",
     excerpt: "Follow this comprehensive framework to design a sales process that consistently guides prospects from awareness to closing with higher conversion rates.",
-    image: "/post3.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Process",
     categories: ["Process", "Conversion"],
     author: "David Miller",
     date: "Jan 15, 2024",

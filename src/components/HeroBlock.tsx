@@ -8,55 +8,55 @@ const HeroBlock = () => {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
       {/* Background image with overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-60" 
+      <div
+        className="absolute inset-0 z-0 opacity-60"
         style={{
-          backgroundImage: 'url(/hero-bg.jpg)',
+          backgroundImage: 'url(https://placehold.co/1920x1080/111827/6B7280?text=Hero+Background)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           filter: 'grayscale(100%)'
         }}
       />
-      
+
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/90 z-1"></div>
-      
+
       <div className="container mx-auto px-6 py-20 md:py-32 relative z-2 flex flex-col items-center min-h-screen">
         <div className="max-w-4xl text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="inline-block">Master the Art of</span>
-            <span className="inline-block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Professional Sales</span>
+            <span className="inline-block">Master the Art of <span className="inline-block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Professional Sales</span></span>
+
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
             Transform your approach, perfect your technique, and elevate your sales performance with our comprehensive training programs.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="default"
               className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-lg font-medium"
             >
               Start Training
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <Button
+              variant="outline"
+              size="lg"
               className="border-white text-white hover:bg-white hover:text-black rounded-md px-8 py-6 text-lg font-medium"
             >
               Learn More
             </Button>
           </div>
         </div>
-        
+
         <Tabs defaultValue="features" className="w-full max-w-4xl">
           <TabsList className="grid w-full grid-cols-3 bg-black/30 backdrop-blur-sm border border-white/10">
             <TabsTrigger value="features" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Features</TabsTrigger>
             <TabsTrigger value="statistics" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Statistics</TabsTrigger>
             <TabsTrigger value="testimonials" className="text-white data-[state=active]:bg-white data-[state=active]:text-black">Testimonials</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="features" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {features.map((feature, index) => (
@@ -72,7 +72,7 @@ const HeroBlock = () => {
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="statistics" className="mt-6">
             <Card className="bg-black/30 backdrop-blur-sm border border-white/10">
               <CardContent className="pt-6">
@@ -93,7 +93,7 @@ const HeroBlock = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="testimonials" className="mt-6">
             <Card className="bg-black/30 backdrop-blur-sm border border-white/10">
               <CardContent className="pt-6">
@@ -108,12 +108,12 @@ const HeroBlock = () => {
           </TabsContent>
         </Tabs>
       </div>
-      
+
       {/* Curved shape at bottom */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-        <svg 
-          viewBox="0 0 1200 120" 
-          preserveAspectRatio="none" 
+        <svg
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
           className="relative block w-full h-24 text-white"
           fill="currentColor"
         >

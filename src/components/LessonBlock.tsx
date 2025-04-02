@@ -94,7 +94,7 @@ const lessons = [
   {
     title: "Fundamentals of Consultative Selling",
     description: "Learn the core principles of consultative selling and how to build meaningful client relationships based on trust.",
-    image: "/lesson1.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Consultative+Selling",
     level: "Beginner",
     duration: "4 hours",
     modules: 5
@@ -102,7 +102,7 @@ const lessons = [
   {
     title: "Advanced Negotiation Tactics",
     description: "Master high-stakes negotiation with advanced psychological techniques and strategic frameworks.",
-    image: "/lesson2.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Negotiation+Tactics",
     level: "Advanced",
     duration: "6 hours",
     modules: 8
@@ -110,7 +110,7 @@ const lessons = [
   {
     title: "Objection Handling Mastery",
     description: "Turn rejections into opportunities with proven methods to address and overcome customer objections.",
-    image: "/lesson3.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Objection+Handling",
     level: "Intermediate",
     duration: "3 hours",
     modules: 4
@@ -118,7 +118,7 @@ const lessons = [
   {
     title: "Sales Closing Techniques",
     description: "Learn powerful closing techniques that feel natural and lead to higher conversion rates.",
-    image: "/lesson4.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Closing+Techniques",
     level: "Intermediate",
     duration: "5 hours",
     modules: 6
@@ -126,7 +126,7 @@ const lessons = [
   {
     title: "Digital Sales Strategies",
     description: "Adapt your sales approach for the digital age with effective online communication tactics.",
-    image: "/lesson5.jpg",
+    image: "https://placehold.co/600x400/111827/6B7280?text=Digital+Sales",
     level: "Advanced",
     duration: "8 hours",
     modules: 10
