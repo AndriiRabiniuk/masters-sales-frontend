@@ -56,20 +56,7 @@ const HeroBlock = () => {
             </div>
           </div>
         </div>
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-between text-sm p-4 bg-blue-50 rounded-lg border border-blue-100 shadow-sm">
-          <div className="flex items-center text-blue-700 mb-4 md:mb-0">
-            <svg className="w-5 h-5 mr-2 text-blue-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2v20m0-20C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span className="font-medium">Version 1.0.0 was installed! Check out all the new features.</span>
-          </div>
-          <div className="flex items-center">
-            <span className="mr-2 text-gray-600 font-medium">Build update:</span>
-            <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-800 hover:bg-blue-100 font-bold">
-              BANNERS
-            </Button>
-          </div>
-        </div>
+    
       </div>
     </section>
   );

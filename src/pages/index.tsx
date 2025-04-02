@@ -1,6 +1,5 @@
 import React from 'react';
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from '@/components/Navbar';
 import HeroBlock from '@/components/HeroBlock';
 import LessonBlock from '@/components/LessonBlock';
 import PostBlock from '@/components/PostBlock';
@@ -18,7 +17,6 @@ const geistMono = Geist_Mono({
 export default function Home() {
   return (
     <div className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-white`}>
-      <Navbar />
       <main>
         <HeroBlock />
         
