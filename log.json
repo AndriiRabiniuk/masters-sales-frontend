@@ -1,1 +1,1 @@
-Enhance UI components across HeroBlock, LessonBlock, PostBlock, and homepage with cursor-pointer styles for improved user interaction.
+Refactor LessonBlock, PostBlock, and Navbar components to incorporate Next.js Link for improved navigation.
