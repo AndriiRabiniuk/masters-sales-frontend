@@ -60,8 +60,8 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             {[
-              { href: "#", label: "Home" },
-              { href: "#", label: "Lessons" },
+              { href: "/", label: "Home" },
+              { href: "/lessons", label: "Lessons" },
               { href: "/articles", label: "Articles" },
               { href: "http://3.135.221.43:3000/", label: "RMK6" },
               { href: "/articles", label: "Resources" },
@@ -117,8 +117,8 @@ const Navbar = () => {
             >
               <div className="flex flex-col space-y-3">
                 {[
-                  { href: "#", label: "Home" },
-                  { href: "#", label: "Lessons" },
+                  { href: "/", label: "Home" },
+                  { href: "/lessons", label: "Lessons" },
                   { href: "/articles", label: "Articles" },
                   { href: "http://3.135.221.43:3000/", label: "RMK6" },
                   { href: "/articles", label: "Resources" },

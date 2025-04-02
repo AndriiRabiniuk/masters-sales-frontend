@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 const LessonDetailPage = () => {
   const router = useRouter();
@@ -34,108 +35,166 @@ const LessonDetailPage = () => {
           style={{ backgroundImage: `url(${lesson.image})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90"></div>
-        <div className="container mx-auto px-6 relative h-full flex flex-col justify-end pb-12">
-          <div className="flex mb-4">
+        <motion.div 
+          className="container mx-auto px-6 relative h-full flex flex-col justify-end pb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div 
+            className="flex mb-4"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+          >
             <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
               {lesson.level}
             </Badge>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{lesson.title}</h1>
-          <div className="flex items-center text-gray-400">
+          </motion.div>
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            {lesson.title}
+          </motion.h1>
+          <motion.div 
+            className="flex items-center text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
             <span>{lesson.duration}</span>
             <Separator orientation="vertical" className="mx-2 h-4 bg-gray-600" />
             <span>{lesson.modules} modules</span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
       
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <div className="mb-8">
+            <motion.div 
+              className="mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
               <h2 className="text-2xl font-bold text-white mb-4">About This Course</h2>
               <p className="text-gray-400 mb-6">{lesson.description}</p>
               <p className="text-gray-400">{lesson.longDescription}</p>
-            </div>
+            </motion.div>
             
-            <div className="mb-8">
+            <motion.div 
+              className="mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
               <h2 className="text-2xl font-bold text-white mb-4">What You'll Learn</h2>
               <ul className="text-gray-400 space-y-2">
                 {lesson.learningOutcomes?.map((outcome, index) => (
-                  <li key={index} className="flex items-start">
+                  <motion.li 
+                    key={index} 
+                    className="flex items-start"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 + (index * 0.1), duration: 0.3 }}
+                  >
                     <svg className="w-5 h-5 text-white mr-2 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span>{outcome}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
             
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
               <h2 className="text-2xl font-bold text-white mb-4">Course Modules</h2>
               <div className="space-y-4">
                 {lesson.moduleDetails?.map((module, index) => (
-                  <Card key={index} className="bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-white/20 transition-all">
-                    <CardContent className="p-4">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <h3 className="text-lg font-bold text-white mb-1">Module {index + 1}: {module.title}</h3>
-                          <p className="text-gray-400 text-sm">{module.duration}</p>
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 + (index * 0.1), duration: 0.3 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <Card className="bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-white/20 transition-all">
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <h3 className="text-lg font-bold text-white mb-1">Module {index + 1}: {module.title}</h3>
+                            <p className="text-gray-400 text-sm">{module.duration}</p>
+                          </div>
+                          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                            <Button variant="ghost" className="text-white hover:text-black hover:bg-white cursor-pointer">
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                              </svg>
+                            </Button>
+                          </motion.div>
                         </div>
-                        <Button variant="ghost" className="text-white hover:text-black hover:bg-white cursor-pointer">
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                          </svg>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
           
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1, duration: 0.5 }}
+          >
             <Card className="bg-zinc-900 border border-zinc-800 sticky top-8">
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-white mb-4">Ready to Start?</h3>
                 <p className="text-gray-400 mb-6">Enroll now to gain access to all course materials and start improving your sales skills today.</p>
-                <Button className="w-full bg-white text-black hover:bg-gray-200 cursor-pointer">
-                  Enroll in This Course
-                </Button>
-                <div className="mt-6">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="w-full bg-white text-black hover:bg-gray-200 cursor-pointer">
+                    Enroll in This Course
+                  </Button>
+                </motion.div>
+                <motion.div 
+                  className="mt-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2, duration: 0.5 }}
+                >
                   <h4 className="text-lg font-bold text-white mb-2">This course includes:</h4>
                   <ul className="text-gray-400 space-y-2">
-                    <li className="flex items-center">
-                      <svg className="w-5 h-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>{lesson.duration} of on-demand video</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg className="w-5 h-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Downloadable resources</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg className="w-5 h-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Certificate of completion</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg className="w-5 h-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Lifetime access</span>
-                    </li>
+                    {[
+                      `${lesson.duration} of on-demand video`,
+                      "Downloadable resources",
+                      "Certificate of completion",
+                      "Lifetime access"
+                    ].map((item, i) => (
+                      <motion.li 
+                        key={i} 
+                        className="flex items-center"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1.3 + (i * 0.1), duration: 0.3 }}
+                      >
+                        <svg className="w-5 h-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>{item}</span>
+                      </motion.li>
+                    ))}
                   </ul>
-                </div>
+                </motion.div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

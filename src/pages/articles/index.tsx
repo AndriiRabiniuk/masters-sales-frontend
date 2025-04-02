@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 
 const ArticlesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,137 +59,189 @@ const ArticlesPage = () => {
   return (
     <div className="min-h-screen bg-zinc-950">
       <div className="container mx-auto px-6 py-16">
-        <div className="mb-12 text-center">
+        <motion.div 
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Latest Sales Insights</h1>
           <p className="text-gray-400 text-xl max-w-3xl mx-auto">
             Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.
           </p>
-        </div>
+        </motion.div>
         
-        <div className="mb-8">
+        <motion.div 
+          className="mb-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
           <div className="flex flex-wrap gap-2 justify-center">
             {allCategories.map((category, index) => (
-              <Badge 
-                key={index} 
-                variant="outline" 
-                className={`border-zinc-700 ${activeCategory === category ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
-                onClick={() => handleCategoryChange(category)}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 * index, duration: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {category}
-              </Badge>
+                <Badge 
+                  variant="outline" 
+                  className={`border-zinc-700 ${activeCategory === category ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
+                  onClick={() => handleCategoryChange(category)}
+                >
+                  {category}
+                </Badge>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentArticles.map((post, index) => (
-            <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group cursor-pointer">
-              <Link href={`/articles/${post.id}`} className="h-48 overflow-hidden relative block">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
-                  style={{ backgroundImage: `url(${post.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-              </Link>
-              
-              <CardHeader className="pb-0 pt-6">
-                <div className="flex gap-2 mb-3 flex-wrap">
-                  {post.categories.map((category, i) => (
-                    <Badge 
-                      key={i} 
-                      variant="outline" 
-                      className="border-zinc-700 text-gray-300 hover:text-white cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleCategoryChange(category);
-                      }}
-                    >
-                      {category}
-                    </Badge>
-                  ))}
-                </div>
-                <Link href={`/articles/${post.id}`}>
-                  <h3 className="text-xl font-bold text-white group-hover:text-gray-200 hover:underline cursor-pointer">
-                    {post.title}
-                  </h3>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index, duration: 0.4 }}
+              whileHover={{ y: -5 }}
+            >
+              <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group cursor-pointer h-full">
+                <Link href={`/articles/${post.id}`} className="h-48 overflow-hidden relative block">
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
+                    style={{ backgroundImage: `url(${post.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
                 </Link>
-              </CardHeader>
-              
-              <CardContent className="py-4">
-                <p className="text-gray-400 line-clamp-3">{post.excerpt}</p>
-              </CardContent>
-              
-              <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
-                <div className="flex items-center">
-                  <div className="h-8 w-8 rounded-full bg-zinc-800 mr-2"></div>
-                  <div>
-                    <span className="text-sm text-white">{post.author}</span>
-                    <p className="text-xs text-gray-500">{post.date}</p>
+                
+                <CardHeader className="pb-0 pt-6">
+                  <div className="flex gap-2 mb-3 flex-wrap">
+                    {post.categories.map((category, i) => (
+                      <Badge 
+                        key={i} 
+                        variant="outline" 
+                        className="border-zinc-700 text-gray-300 hover:text-white cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCategoryChange(category);
+                        }}
+                      >
+                        {category}
+                      </Badge>
+                    ))}
                   </div>
-                </div>
-                <Link href={`/articles/${post.id}`}>
-                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto cursor-pointer">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+                  <Link href={`/articles/${post.id}`}>
+                    <h3 className="text-xl font-bold text-white group-hover:text-gray-200 hover:underline cursor-pointer">
+                      {post.title}
+                    </h3>
+                  </Link>
+                </CardHeader>
+                
+                <CardContent className="py-4">
+                  <p className="text-gray-400 line-clamp-3">{post.excerpt}</p>
+                </CardContent>
+                
+                <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                  <div className="flex items-center">
+                    <div className="h-8 w-8 rounded-full bg-zinc-800 mr-2"></div>
+                    <div>
+                      <span className="text-sm text-white">{post.author}</span>
+                      <p className="text-xs text-gray-500">{post.date}</p>
+                    </div>
+                  </div>
+                  <Link href={`/articles/${post.id}`}>
+                    <motion.div whileHover={{ x: 3 }} whileTap={{ scale: 0.9 }}>
+                      <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto cursor-pointer">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Button>
+                    </motion.div>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
           ))}
         </div>
         
         {/* No results message */}
         {currentArticles.length === 0 && (
-          <div className="text-center my-12">
+          <motion.div 
+            className="text-center my-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <p className="text-gray-400 text-lg">No articles found for this category.</p>
-            <Button 
-              variant="outline" 
-              className="mt-4 border-white text-white hover:bg-white hover:text-black cursor-pointer"
-              onClick={() => handleCategoryChange('All')}
-            >
-              View All Articles
-            </Button>
-          </div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                variant="outline" 
+                className="mt-4 border-white text-white hover:bg-white hover:text-black cursor-pointer"
+                onClick={() => handleCategoryChange('All')}
+              >
+                View All Articles
+              </Button>
+            </motion.div>
+          </motion.div>
         )}
         
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="mt-12 flex justify-center items-center space-x-2">
-            <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
+          <motion.div 
+            className="mt-12 flex justify-center items-center space-x-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </Button>
+            </motion.div>
             
             <div className="flex space-x-2">
               {pageNumbers.map(number => (
-                <Button
+                <motion.div 
                   key={number}
-                  variant={currentPage === number ? "default" : "outline"}
-                  className={`cursor-pointer ${currentPage === number 
-                    ? "bg-white text-black hover:bg-gray-200" 
-                    : "border-white text-white hover:bg-white hover:text-black"
-                  }`}
-                  onClick={() => goToPage(number)}
+                  whileHover={{ scale: 1.1 }} 
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 * number, duration: 0.3 }}
                 >
-                  {number}
-                </Button>
+                  <Button
+                    variant={currentPage === number ? "default" : "outline"}
+                    className={`cursor-pointer ${currentPage === number 
+                      ? "bg-white text-black hover:bg-gray-200" 
+                      : "border-white text-white hover:bg-white hover:text-black"
+                    }`}
+                    onClick={() => goToPage(number)}
+                  >
+                    {number}
+                  </Button>
+                </motion.div>
               ))}
             </div>
             
-            <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-          </div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </Button>
+            </motion.div>
+          </motion.div>
         )}
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function Home() {
                 <h4 className="font-medium text-white mb-4">Navigation</h4>
                 <ul className="space-y-2">
                   {[
-                    { label: "Home", href: "#" },
+                    { label: "Home", href: "/" },
                     { label: "Train", href: "/lessons" },
                     { label: "RMK6", href: "http://3.135.221.43:3000/" },
                     { label: "Resources", href: "/articles" }

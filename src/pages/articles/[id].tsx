@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { motion } from 'framer-motion';
 
 // Define the types for content sections
 type ContentSection = {
@@ -58,65 +59,129 @@ const ArticleDetailPage = () => {
           style={{ backgroundImage: `url(${post.image})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent opacity-90"></div>
-        <div className="container mx-auto px-6 relative h-full flex flex-col justify-end pb-12">
+        <motion.div 
+          className="container mx-auto px-6 relative h-full flex flex-col justify-end pb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="flex gap-2 mb-4 flex-wrap">
             {post.categories.map((category, i) => (
-              <Badge key={i} variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
-                {category}
-              </Badge>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * i, duration: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Badge key={i} variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
+                  {category}
+                </Badge>
+              </motion.div>
             ))}
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{post.title}</h1>
-          <div className="flex items-center mb-2">
+          <motion.h1 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            {post.title}
+          </motion.h1>
+          <motion.div 
+            className="flex items-center mb-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
             <div className="h-10 w-10 rounded-full bg-zinc-800 mr-3"></div>
             <div>
               <p className="text-white font-medium">{post.author}</p>
               <p className="text-gray-400 text-sm">{post.date}</p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
       
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="prose prose-lg prose-invert">
-            <p className="text-xl text-gray-300 mb-8 font-light leading-relaxed">
+          <motion.div 
+            className="prose prose-lg prose-invert"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <motion.p 
+              className="text-xl text-gray-300 mb-8 font-light leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
               {post.excerpt}
-            </p>
+            </motion.p>
             
             <Separator className="my-8" />
             
             {post.content.map((section, index) => (
-              <div key={index} className="mb-12">
+              <motion.div 
+                key={index} 
+                className="mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 * index + 0.6, duration: 0.5 }}
+              >
                 {section.heading && (
                   <h2 className="text-2xl font-bold text-white mb-4">{section.heading}</h2>
                 )}
                 {section.paragraphs.map((paragraph, idx) => (
                   <p key={idx} className="text-gray-300 mb-4">{paragraph}</p>
                 ))}
-              </div>
+              </motion.div>
             ))}
             
-            <div className="mt-12 pt-8 border-t border-zinc-800">
+            <motion.div 
+              className="mt-12 pt-8 border-t border-zinc-800"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.5 }}
+            >
               <h3 className="text-xl font-bold text-white mb-4">Share this article</h3>
               <div className="flex gap-4">
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                  Twitter
-                </Button>
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                  LinkedIn
-                </Button>
-                <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                  Facebook
-                </Button>
+                {["Twitter", "LinkedIn", "Facebook"].map((platform, i) => (
+                  <motion.div 
+                    key={platform}
+                    whileHover={{ scale: 1.1 }} 
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.1 + (i * 0.1), duration: 0.3 }}
+                  >
+                    <Button variant="outline" size="sm" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
+                      {platform}
+                    </Button>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
             
-            <div className="mt-12 pt-8 border-t border-zinc-800">
+            <motion.div 
+              className="mt-12 pt-8 border-t border-zinc-800"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+            >
               <h3 className="text-xl font-bold text-white mb-6">Related Articles</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {relatedArticles.map((article, index) => (
-                  <div key={index} className="flex space-x-4 cursor-pointer" onClick={() => router.push(`/articles/${article.id}`)}>
+                  <motion.div 
+                    key={index} 
+                    className="flex space-x-4 cursor-pointer" 
+                    onClick={() => router.push(`/articles/${article.id}`)}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.3 + (index * 0.1), duration: 0.3 }}
+                    whileHover={{ x: 5 }}
+                  >
                     <div className="h-20 w-20 bg-zinc-800 flex-shrink-0"></div>
                     <div>
                       <h4 className="text-white font-medium mb-1 hover:text-gray-300 cursor-pointer">
@@ -124,11 +189,11 @@ const ArticleDetailPage = () => {
                       </h4>
                       <p className="text-gray-500 text-sm">{article.date}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>
