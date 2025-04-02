@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import Navbar from '@/components/Navbar';
 
 // Define the types for content sections
 type ContentSection = {
@@ -53,8 +52,6 @@ const ArticleDetailPage = () => {
   
   return (
     <div className="min-h-screen bg-zinc-950">
-      <Navbar />
-      
       <div className="relative h-80 md:h-96 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center filter grayscale"

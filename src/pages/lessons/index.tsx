@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import Navbar from '@/components/Navbar';
 
 const LessonsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,8 +43,6 @@ const LessonsPage = () => {
   
   return (
     <div className="min-h-screen bg-black">
-      <Navbar />
-      
       <div className="container mx-auto px-6 py-16">
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Master Your Sales Skills</h1>

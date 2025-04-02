@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import Navbar from '@/components/Navbar';
 import { Card, CardContent } from '@/components/ui/card';
 
 const LessonDetailPage = () => {
@@ -29,8 +28,6 @@ const LessonDetailPage = () => {
   
   return (
     <div className="min-h-screen bg-black">
-      <Navbar />
-      
       <div className="relative h-96 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center filter grayscale"

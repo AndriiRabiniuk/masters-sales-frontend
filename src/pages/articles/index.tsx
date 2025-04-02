@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import Navbar from '@/components/Navbar';
 
 const ArticlesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,8 +57,6 @@ const ArticlesPage = () => {
   
   return (
     <div className="min-h-screen bg-zinc-950">
-      <Navbar />
-      
       <div className="container mx-auto px-6 py-16">
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Latest Sales Insights</h1>
