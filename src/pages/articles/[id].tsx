@@ -5,6 +5,31 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Navbar from '@/components/Navbar';
 
+// Define the types for content sections
+type ContentSection = {
+  heading?: string;
+  paragraphs: string[];
+};
+
+// Define the type for a post
+type Post = {
+  id: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  categories: string[];
+  author: string;
+  date: string;
+  content: ContentSection[];
+};
+
+// Define the type for a related article
+type RelatedArticle = {
+  id: string;
+  title: string;
+  date: string;
+};
+
 const ArticleDetailPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -113,7 +138,7 @@ const ArticleDetailPage = () => {
   );
 };
 
-const posts = [
+const posts: Post[] = [
   {
     id: "psychological-triggers-sales",
     title: "7 Psychological Triggers That Drive High-Value Sales",
@@ -229,7 +254,7 @@ const posts = [
   }
 ];
 
-const relatedArticles = [
+const relatedArticles: RelatedArticle[] = [
   {
     id: "future-b2b-digital-economy",
     title: "The Future of B2B Sales in a Digital-First Economy",

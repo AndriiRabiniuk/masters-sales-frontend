@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,13 +19,13 @@ const PostBlock = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post, index) => (
             <Card key={index} className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group">
-              <div className="h-48 overflow-hidden relative">
+              <Link href={`/articles/${post.id}`} className="h-48 overflow-hidden relative block">
                 <div 
                   className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
                   style={{ backgroundImage: `url(${post.image})` }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-              </div>
+              </Link>
               
               <CardHeader className="pb-0 pt-6">
                 <div className="flex gap-2 mb-3">
@@ -34,9 +35,11 @@ const PostBlock = () => {
                     </Badge>
                   ))}
                 </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-gray-200">
-                  {post.title}
-                </h3>
+                <Link href={`/articles/${post.id}`}>
+                  <h3 className="text-xl font-bold text-white group-hover:text-gray-200 hover:underline cursor-pointer">
+                    {post.title}
+                  </h3>
+                </Link>
               </CardHeader>
               
               <CardContent className="py-4">
@@ -51,20 +54,24 @@ const PostBlock = () => {
                     <p className="text-xs text-gray-500">{post.date}</p>
                   </div>
                 </div>
-                <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </Button>
+                <Link href={`/articles/${post.id}`}>
+                  <Button variant="ghost" className="text-white hover:text-black hover:bg-white p-0 h-auto">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}
         </div>
         
         <div className="mt-12 text-center">
-          <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2">
-            View All Articles
-          </Button>
+          <Link href="/articles">
+            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2">
+              View All Articles
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -73,6 +80,7 @@ const PostBlock = () => {
 
 const posts = [
   {
+    id: "psychological-triggers-sales",
     title: "7 Psychological Triggers That Drive High-Value Sales",
     excerpt: "Discover the key psychological principles that influence purchase decisions and learn how to ethically apply them in your sales conversations.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Psychology",
@@ -81,6 +89,7 @@ const posts = [
     date: "Feb 12, 2024",
   },
   {
+    id: "future-b2b-digital-economy",
     title: "The Future of B2B Sales in a Digital-First Economy",
     excerpt: "Explore how B2B sales is evolving with digital transformation and what strategies top-performing organizations are implementing to stay ahead.",
     image: "https://placehold.co/600x400/111827/6B7280?text=B2B+Digital+Sales",
@@ -89,6 +98,7 @@ const posts = [
     date: "Jan 28, 2024",
   },
   {
+    id: "sales-process-converts",
     title: "Building a Sales Process That Converts: A Step-by-Step Guide",
     excerpt: "Follow this comprehensive framework to design a sales process that consistently guides prospects from awareness to closing with higher conversion rates.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Process",

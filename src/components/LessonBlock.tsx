@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -23,9 +24,11 @@ const LessonBlock = () => {
               Carefully crafted lessons to elevate your sales performance through proven techniques and strategies.
             </p>
           </div>
-          <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black">
-            View All Courses
-          </Button>
+          <Link href="/lessons">
+            <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black">
+              View All Courses
+            </Button>
+          </Link>
         </div>
         
         <Separator className="bg-white/10 mb-12" />
@@ -65,9 +68,11 @@ const LessonBlock = () => {
                         <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
                         <span className="text-sm text-gray-400">{lesson.modules} modules</span>
                       </div>
-                      <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black">
-                        Start
-                      </Button>
+                      <Link href={`/lessons/${lesson.id}`}>
+                        <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black">
+                          View Details
+                        </Button>
+                      </Link>
                     </CardFooter>
                   </Card>
                 </CarouselItem>
@@ -81,9 +86,11 @@ const LessonBlock = () => {
         </ScrollArea>
         
         <div className="mt-16 text-center">
-          <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6" size="lg">
-            View All Lessons
-          </Button>
+          <Link href="/lessons">
+            <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6" size="lg">
+              View All Lessons
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -92,6 +99,7 @@ const LessonBlock = () => {
 
 const lessons = [
   {
+    id: "fundamentals-consultative-selling",
     title: "Fundamentals of Consultative Selling",
     description: "Learn the core principles of consultative selling and how to build meaningful client relationships based on trust.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Consultative+Selling",
@@ -100,6 +108,7 @@ const lessons = [
     modules: 5
   },
   {
+    id: "advanced-negotiation-tactics",
     title: "Advanced Negotiation Tactics",
     description: "Master high-stakes negotiation with advanced psychological techniques and strategic frameworks.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Negotiation+Tactics",
@@ -108,6 +117,7 @@ const lessons = [
     modules: 8
   },
   {
+    id: "objection-handling-mastery",
     title: "Objection Handling Mastery",
     description: "Turn rejections into opportunities with proven methods to address and overcome customer objections.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Objection+Handling",
@@ -116,6 +126,7 @@ const lessons = [
     modules: 4
   },
   {
+    id: "sales-closing-techniques",
     title: "Sales Closing Techniques",
     description: "Learn powerful closing techniques that feel natural and lead to higher conversion rates.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Closing+Techniques",
@@ -124,6 +135,7 @@ const lessons = [
     modules: 6
   },
   {
+    id: "digital-sales-strategies",
     title: "Digital Sales Strategies",
     description: "Adapt your sales approach for the digital age with effective online communication tactics.",
     image: "https://placehold.co/600x400/111827/6B7280?text=Digital+Sales",

@@ -27,7 +27,8 @@ const Navbar = () => {
           
           <div className="hidden md:flex items-center space-x-8">
             <SimpleNavLink href="/">Home</SimpleNavLink>
-            <SimpleNavLink href="/train">Train</SimpleNavLink>
+            <SimpleNavLink href="/lessons">Lessons</SimpleNavLink>
+            <SimpleNavLink href="/articles">Articles</SimpleNavLink>
             <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
             <SimpleNavLink href="/resources">Resources</SimpleNavLink>
             <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
@@ -51,7 +52,8 @@ const Navbar = () => {
           <div className="md:hidden mt-4 pb-4 bg-black/70 backdrop-blur-md rounded-lg p-4 animate-in slide-in-from-top-5">
             <div className="flex flex-col space-y-3">
               <SimpleNavLink href="/">Home</SimpleNavLink>
-              <SimpleNavLink href="/train">Train</SimpleNavLink>
+              <SimpleNavLink href="/lessons">Lessons</SimpleNavLink>
+              <SimpleNavLink href="/articles">Articles</SimpleNavLink>
               <SimpleNavLink href="/rmk6">RMK6</SimpleNavLink>
               <SimpleNavLink href="/resources">Resources</SimpleNavLink>
               <SimpleNavLink href="/login">Login/sign</SimpleNavLink>
