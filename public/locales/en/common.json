@@ -1,0 +1,62 @@
+{
+  "navbar": {
+    "home": "Home",
+    "lessons": "Lessons",
+    "articles": "Articles",
+    "rmk6": "RMK6",
+    "resources": "Resources",
+    "login": "Login/sign"
+  },
+  "heroBlock": {
+    "title": "Master Your Sales Skills",
+    "subtitle": "Learn the art of persuasive selling from industry experts",
+    "cta": "Explore Courses"
+  },
+  "lessonBlock": {
+    "title": "Featured Courses",
+    "viewAll": "View All Courses"
+  },
+  "postBlock": {
+    "title": "Latest Articles",
+    "viewAll": "View All Articles"
+  },
+  "articles": {
+    "title": "Latest Sales Insights",
+    "subtitle": "Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.",
+    "viewArticle": "View Article",
+    "noResults": "No articles found for this category.",
+    "viewAllArticles": "View All Articles"
+  },
+  "lessons": {
+    "title": "Master Your Sales Skills",
+    "subtitle": "Comprehensive courses designed to elevate your sales performance through proven techniques and strategies.",
+    "viewDetails": "View Details"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "lessonDetail": {
+    "aboutCourse": "About This Course",
+    "whatYouLearn": "What You'll Learn",
+    "courseModules": "Course Modules",
+    "readyToStart": "Ready to Start?",
+    "enroll": "Enroll in This Course",
+    "courseIncludes": "This course includes:",
+    "onDemandVideo": "of on-demand video",
+    "downloadableResources": "Downloadable resources",
+    "certificate": "Certificate of completion",
+    "lifetimeAccess": "Lifetime access"
+  },
+  "articleDetail": {
+    "shareArticle": "Share this article",
+    "relatedArticles": "Related Articles"
+  },
+  "footer": {
+    "slogan": "The premier platform for mastering sales techniques and achieving higher performance.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "copyright": "© 2024 Masters Sales. All rights reserved."
+  }
+} 

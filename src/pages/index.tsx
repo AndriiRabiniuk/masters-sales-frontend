@@ -1,5 +1,7 @@
 import React from 'react';
 import { Geist, Geist_Mono } from "next/font/google";
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import HeroBlock from '@/components/HeroBlock';
 import LessonBlock from '@/components/LessonBlock';
 import PostBlock from '@/components/PostBlock';
@@ -8,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +23,8 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  const { t } = useTranslation('common');
+  
   return (
     <div className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black`}>
       <main>
@@ -45,7 +50,7 @@ export default function Home() {
               transition={{ delay: 0.1, duration: 0.5 }}
             >
               <div className="font-bold text-white text-xl mb-4">Masters Sales</div>
-              <p className="max-w-xs">The premier platform for mastering sales techniques and achieving higher performance.</p>
+              <p className="max-w-xs">{t('footer.slogan')}</p>
             </motion.div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
@@ -55,13 +60,13 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <h4 className="font-medium text-white mb-4">Navigation</h4>
+                <h4 className="font-medium text-white mb-4">{t('navbar.home')}</h4>
                 <ul className="space-y-2">
                   {[
-                    { label: "Home", href: "/" },
-                    { label: "Train", href: "/lessons" },
-                    { label: "RMK6", href: "http://3.135.221.43:3000/" },
-                    { label: "Resources", href: "/articles" }
+                    { label: t('navbar.home'), href: "/" },
+                    { label: t('navbar.lessons'), href: "/lessons" },
+                    { label: t('navbar.rmk6'), href: "http://3.135.221.43:3000/" },
+                    { label: t('navbar.resources'), href: "/articles" }
                   ].map((link, i) => (
                     <motion.li 
                       key={i}
@@ -89,13 +94,12 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <h4 className="font-medium text-white mb-4">Resources</h4>
+                <h4 className="font-medium text-white mb-4">{t('navbar.resources')}</h4>
                 <ul className="space-y-2">
                   {[
-                    { label: "Documentation", href: "#" },
-                    { label: "Components", href: "#" },
-                    { label: "Help Center", href: "#" },
-                    { label: "Contact", href: "#" }
+                    { label: t('articles.title'), href: "/articles" },
+                    { label: t('lessonBlock.title'), href: "/lessons" },
+                    { label: t('navbar.rmk6'), href: "http://3.135.221.43:3000/" }
                   ].map((link, i) => (
                     <motion.li 
                       key={i}
@@ -126,9 +130,9 @@ export default function Home() {
                 <h4 className="font-medium text-white mb-4">Legal</h4>
                 <ul className="space-y-2">
                   {[
-                    { label: "Privacy Policy", href: "#" },
-                    { label: "Terms of Service", href: "#" },
-                    { label: "Cookie Policy", href: "#" }
+                    { label: t('footer.privacy'), href: "#" },
+                    { label: t('footer.terms'), href: "#" },
+                    { label: t('footer.cookies'), href: "#" }
                   ].map((link, i) => (
                     <motion.li 
                       key={i}
@@ -159,7 +163,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.5 }}
           >
-            <p>© 2024 Masters Sales. All rights reserved.</p>
+            <p>{t('footer.copyright')}</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               {[
                 { icon: "M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" },
@@ -188,3 +192,11 @@ export default function Home() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};

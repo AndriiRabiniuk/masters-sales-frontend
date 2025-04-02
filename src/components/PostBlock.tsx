@@ -4,8 +4,11 @@ import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 
 const PostBlock = () => {
+  const { t } = useTranslation('common');
+  
   return (
     <div className="bg-zinc-950 text-white py-20">
       <div className="container mx-auto px-6">
@@ -23,7 +26,7 @@ const PostBlock = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            Latest Insights
+            {t('postBlock.title')}
           </motion.h2>
           <motion.div 
             className="h-1 w-20 bg-white mb-6"
@@ -39,7 +42,7 @@ const PostBlock = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.
+            {t('articles.subtitle')}
           </motion.p>
         </motion.div>
         
@@ -138,7 +141,7 @@ const PostBlock = () => {
           >
             <Link href="/articles">
               <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black rounded-md px-6 py-2 cursor-pointer">
-                View All Articles
+                {t('postBlock.viewAll')}
               </Button>
             </Link>
           </motion.div>

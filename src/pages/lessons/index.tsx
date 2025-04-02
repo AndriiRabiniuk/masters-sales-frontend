@@ -5,8 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const LessonsPage = () => {
+  const { t } = useTranslation('common');
   const [currentPage, setCurrentPage] = useState(1);
   const lessonsPerPage = 6;
   
@@ -51,9 +55,9 @@ const LessonsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Master Your Sales Skills</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('lessons.title')}</h1>
           <p className="text-gray-400 text-xl max-w-3xl mx-auto">
-            Comprehensive courses designed to elevate your sales performance through proven techniques and strategies.
+            {t('lessons.subtitle')}
           </p>
         </motion.div>
         
@@ -119,7 +123,7 @@ const LessonsPage = () => {
                         variant="outline" 
                         className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer"
                       >
-                        View Details
+                        {t('lessons.viewDetails')}
                       </Button>
                     </motion.div>
                   </Link>
@@ -144,7 +148,7 @@ const LessonsPage = () => {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                {t('pagination.previous')}
               </Button>
             </motion.div>
             
@@ -179,7 +183,7 @@ const LessonsPage = () => {
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                {t('pagination.next')}
               </Button>
             </motion.div>
           </motion.div>
@@ -272,5 +276,13 @@ const lessons = [
     modules: 6
   }
 ];
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
 
 export default LessonsPage; 

@@ -3,10 +3,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from 'next-i18next';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
+  const { t } = useTranslation('common');
 
   const toggleMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -26,6 +30,15 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const navLinks = [
+    { href: "#", label: t('navbar.home') },
+    { href: "#", label: t('navbar.lessons') },
+    { href: "/articles", label: t('navbar.articles') },
+    { href: "http://3.135.221.43:3000/", label: t('navbar.rmk6') },
+    { href: "/articles", label: t('navbar.resources') },
+    { href: "#", label: t('navbar.login') }
+  ];
 
   return (
     <motion.header 
@@ -59,14 +72,7 @@ const Navbar = () => {
           
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/lessons", label: "Lessons" },
-              { href: "/articles", label: "Articles" },
-              { href: "http://3.135.221.43:3000/", label: "RMK6" },
-              { href: "/articles", label: "Resources" },
-              { href: "#", label: "Login/sign" }
-            ].map((link, i) => (
+            {navLinks.map((link, i) => (
               <motion.div 
                 key={link.href}
                 initial={{ opacity: 0, y: -10 }} 
@@ -87,8 +93,9 @@ const Navbar = () => {
                 variant="outline" 
                 size="sm" 
                 className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
+                onClick={toggleLanguage}
               >
-                EN/FR
+                {language === 'en' ? 'FR' : 'EN'}
               </Button>
             </motion.div>
           </div>
@@ -116,14 +123,7 @@ const Navbar = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="flex flex-col space-y-3">
-                {[
-                  { href: "/", label: "Home" },
-                  { href: "/lessons", label: "Lessons" },
-                  { href: "/articles", label: "Articles" },
-                  { href: "http://3.135.221.43:3000/", label: "RMK6" },
-                  { href: "/articles", label: "Resources" },
-                  { href: "#", label: "Login/sign" }
-                ].map((link, i) => (
+                {navLinks.map((link, i) => (
                   <motion.div 
                     key={link.href}
                     initial={{ x: -20, opacity: 0 }}
@@ -142,8 +142,9 @@ const Navbar = () => {
                     variant="outline" 
                     size="sm" 
                     className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors mt-2 cursor-pointer"
+                    onClick={toggleLanguage}
                   >
-                    EN/FR
+                    {language === 'en' ? 'FR' : 'EN'}
                   </Button>
                 </motion.div>
               </div>

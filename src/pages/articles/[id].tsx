@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 // Define the types for content sections
 type ContentSection = {
@@ -31,6 +34,7 @@ type RelatedArticle = {
 };
 
 const ArticleDetailPage = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const { id } = router.query;
   
@@ -145,7 +149,7 @@ const ArticleDetailPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.5 }}
             >
-              <h3 className="text-xl font-bold text-white mb-4">Share this article</h3>
+              <h3 className="text-xl font-bold text-white mb-4">{t('articleDetail.shareArticle')}</h3>
               <div className="flex gap-4">
                 {["Twitter", "LinkedIn", "Facebook"].map((platform, i) => (
                   <motion.div 
@@ -170,7 +174,7 @@ const ArticleDetailPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.5 }}
             >
-              <h3 className="text-xl font-bold text-white mb-6">Related Articles</h3>
+              <h3 className="text-xl font-bold text-white mb-6">{t('articleDetail.relatedArticles')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {relatedArticles.map((article, index) => (
                   <motion.div 
@@ -328,5 +332,13 @@ const relatedArticles: RelatedArticle[] = [
     date: "Jan 15, 2024"
   }
 ];
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
 
 export default ArticleDetailPage;

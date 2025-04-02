@@ -5,8 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const LessonDetailPage = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const { id } = router.query;
   
@@ -81,7 +85,7 @@ const LessonDetailPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-4">About This Course</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('lessonDetail.aboutCourse')}</h2>
               <p className="text-gray-400 mb-6">{lesson.description}</p>
               <p className="text-gray-400">{lesson.longDescription}</p>
             </motion.div>
@@ -92,7 +96,7 @@ const LessonDetailPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-4">What You'll Learn</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('lessonDetail.whatYouLearn')}</h2>
               <ul className="text-gray-400 space-y-2">
                 {lesson.learningOutcomes?.map((outcome, index) => (
                   <motion.li 
@@ -116,7 +120,7 @@ const LessonDetailPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-4">Course Modules</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('lessonDetail.courseModules')}</h2>
               <div className="space-y-4">
                 {lesson.moduleDetails?.map((module, index) => (
                   <motion.div 
@@ -156,11 +160,11 @@ const LessonDetailPage = () => {
           >
             <Card className="bg-zinc-900 border border-zinc-800 sticky top-8">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-white mb-4">Ready to Start?</h3>
+                <h3 className="text-xl font-bold text-white mb-4">{t('lessonDetail.readyToStart')}</h3>
                 <p className="text-gray-400 mb-6">Enroll now to gain access to all course materials and start improving your sales skills today.</p>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button className="w-full bg-white text-black hover:bg-gray-200 cursor-pointer">
-                    Enroll in This Course
+                    {t('lessonDetail.enroll')}
                   </Button>
                 </motion.div>
                 <motion.div 
@@ -169,13 +173,13 @@ const LessonDetailPage = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2, duration: 0.5 }}
                 >
-                  <h4 className="text-lg font-bold text-white mb-2">This course includes:</h4>
+                  <h4 className="text-lg font-bold text-white mb-2">{t('lessonDetail.courseIncludes')}</h4>
                   <ul className="text-gray-400 space-y-2">
                     {[
-                      `${lesson.duration} of on-demand video`,
-                      "Downloadable resources",
-                      "Certificate of completion",
-                      "Lifetime access"
+                      `${lesson.duration} ${t('lessonDetail.onDemandVideo')}`,
+                      t('lessonDetail.downloadableResources'),
+                      t('lessonDetail.certificate'),
+                      t('lessonDetail.lifetimeAccess')
                     ].map((item, i) => (
                       <motion.li 
                         key={i} 
@@ -508,5 +512,13 @@ const lessons = [
     ]
   }
 ];
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
 
 export default LessonDetailPage; 

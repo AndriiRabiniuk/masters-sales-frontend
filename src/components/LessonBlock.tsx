@@ -13,8 +13,11 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 import { motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 
 const LessonBlock = () => {
+  const { t } = useTranslation('common');
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -53,7 +56,7 @@ const LessonBlock = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Master Your Sales Skills
+              {t('lessonBlock.title')}
             </motion.h2>
             <motion.p 
               className="text-gray-400 text-xl mt-4 max-w-2xl"
@@ -62,7 +65,7 @@ const LessonBlock = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Carefully crafted lessons to elevate your sales performance through proven techniques and strategies.
+              {t('lessons.subtitle')}
             </motion.p>
           </div>
           <motion.div
@@ -75,7 +78,7 @@ const LessonBlock = () => {
           >
             <Link href="/lessons">
               <Button variant="outline" className="mt-4 md:mt-0 border-white text-white hover:bg-white hover:text-black cursor-pointer">
-                View All Courses
+                {t('lessonBlock.viewAll')}
               </Button>
             </Link>
           </motion.div>
@@ -138,7 +141,7 @@ const LessonBlock = () => {
                           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link href={`/lessons/${lesson.id}`}>
                               <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                                View Details
+                                {t('lessons.viewDetails')}
                               </Button>
                             </Link>
                           </motion.div>
@@ -170,7 +173,7 @@ const LessonBlock = () => {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link href="/lessons">
               <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 cursor-pointer" size="lg">
-                View All Lessons
+                {t('lessonBlock.viewAll')}
               </Button>
             </Link>
           </motion.div>

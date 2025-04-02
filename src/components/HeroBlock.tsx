@@ -4,8 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 
 const HeroBlock = () => {
+  const { t } = useTranslation('common');
+  
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -62,7 +65,7 @@ const HeroBlock = () => {
             className="text-5xl md:text-6xl font-bold tracking-tight mb-6"
             variants={itemVariants}
           >
-            <span className="inline-block">Master the Art of <span className="inline-block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Professional Sales</span></span>
+            <span className="inline-block">{t('heroBlock.title')} <span className="inline-block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">{t('heroBlock.subtitle')}</span></span>
           </motion.h1>
 
           <motion.p 
@@ -82,7 +85,7 @@ const HeroBlock = () => {
                 variant="default"
                 className="bg-white text-black hover:bg-gray-200 rounded-md px-8 py-6 text-lg font-medium cursor-pointer"
               >
-                Start Training
+                {t('heroBlock.cta')}
               </Button>
             </motion.div>
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">

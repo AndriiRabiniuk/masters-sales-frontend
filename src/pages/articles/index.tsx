@@ -4,8 +4,12 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const ArticlesPage = () => {
+  const { t } = useTranslation('common');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState('All');
   const articlesPerPage = 6;
@@ -65,9 +69,9 @@ const ArticlesPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Latest Sales Insights</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('articles.title')}</h1>
           <p className="text-gray-400 text-xl max-w-3xl mx-auto">
-            Stay ahead with our expert analysis and practical advice on modern sales techniques and industry trends.
+            {t('articles.subtitle')}
           </p>
         </motion.div>
         
@@ -175,14 +179,14 @@ const ArticlesPage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-gray-400 text-lg">No articles found for this category.</p>
+            <p className="text-gray-400 text-lg">{t('articles.noResults')}</p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 variant="outline" 
                 className="mt-4 border-white text-white hover:bg-white hover:text-black cursor-pointer"
                 onClick={() => handleCategoryChange('All')}
               >
-                View All Articles
+                {t('articles.viewAllArticles')}
               </Button>
             </motion.div>
           </motion.div>
@@ -203,7 +207,7 @@ const ArticlesPage = () => {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                {t('pagination.previous')}
               </Button>
             </motion.div>
             
@@ -238,7 +242,7 @@ const ArticlesPage = () => {
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                {t('pagination.next')}
               </Button>
             </motion.div>
           </motion.div>
@@ -331,5 +335,13 @@ const posts = [
     date: "Nov 10, 2023",
   }
 ];
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
 
 export default ArticlesPage; 
