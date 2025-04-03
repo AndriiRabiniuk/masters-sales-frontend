@@ -137,47 +137,46 @@ const LessonBlock = () => {
               <Carousel className="w-full">
                 <CarouselContent className="-ml-4">
                   {courses.map((course, index) => (
-                    <CarouselItem key={course._id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={course._id || index} className="pl-4 md:basis-1/2 lg:basis-1/3">
                       <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         whileHover={{ y: -8 }}
+                        className="h-full"
                       >
-                        <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
-                          <Link href={`/lessons/${course.id}`} className="h-48 overflow-hidden relative block">
-                            <motion.div 
-                              className="absolute inset-0 bg-cover bg-center filter grayscale"
-                              style={{ backgroundImage: `url(${course.image})` }}
-                              whileHover={{ scale: 1.1, filter: "grayscale(70%)" }}
-                              transition={{ duration: 0.4 }}
+                        <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden h-full flex flex-col group">
+                          <div className="aspect-[16/9] relative overflow-hidden">
+                            <div 
+                              className="absolute inset-0 bg-cover bg-center transform transition-transform duration-500 group-hover:scale-105"
+                              style={{ backgroundImage: `url(${course.image || '/images/placeholder.jpg'})` }}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
                             <div className="absolute top-4 left-4">
-                              <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
-                                {course.level}
+                              <Badge className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
+                                {course.level || "Beginner"}
                               </Badge>
                             </div>
-                          </Link>
+                          </div>
                           
-                          <Link href={`/lessons/${course.id}`} className="block cursor-pointer">
+                          <Link href={`/lessons/${course.id}`} className="flex-grow flex flex-col">
                             <CardHeader className="pb-0">
-                              <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                                {course.title}
+                              <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200 line-clamp-2">
+                                {course.title || "Untitled Course"}
                               </CardTitle>
                             </CardHeader>
                             
-                            <CardContent className="py-4">
-                              <p className="text-gray-400">{course.description}</p>
+                            <CardContent className="py-4 flex-grow">
+                              <p className="text-gray-400 line-clamp-3">{course.description || "No description available"}</p>
                             </CardContent>
                           </Link>
                           
-                          <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                          <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4 mt-auto">
                             <div className="flex items-center">
-                              <span className="text-sm text-gray-400">{course.duration}</span>
+                              <span className="text-sm text-gray-400">{course.duration || "Self-paced"}</span>
                               <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
-                              <span className="text-sm text-gray-400">{course.modules} modules</span>
+                              <span className="text-sm text-gray-400">{course.modules || 0} modules</span>
                             </div>
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                               <Link href={`/lessons/${course.id}`}>

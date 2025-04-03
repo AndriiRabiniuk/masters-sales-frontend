@@ -255,7 +255,7 @@ const LessonsPage = ({ initialData, categories, levels }: {
         </motion.div>
         
         {/* Lessons grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {loading ? (
             <div className="col-span-3 text-center py-12">
               <div className="text-white text-xl">Loading...</div>
@@ -283,38 +283,39 @@ const LessonsPage = ({ initialData, categories, levels }: {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (index % 3), duration: 0.4 }}
                 whileHover={{ y: -5 }}
+                className="h-full"
               >
                 <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden h-full flex flex-col group">
-                  <div className="h-48 overflow-hidden relative">
+                  <div className="aspect-[16/9] overflow-hidden relative">
                     <div 
-                      className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
-                      style={{ backgroundImage: `url(${course.image})` }}
+                      className="absolute inset-0 bg-cover bg-center transform transition-transform duration-500 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${course.image || '/images/placeholder.jpg'})` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70" />
                     <div className="absolute top-3 right-3">
                       <Badge className="bg-white text-black font-medium">
-                        {course.level}
+                        {course.level || "Beginner"}
                       </Badge>
                     </div>
                   </div>
                 
                   <Link href={`/lessons/${course.id}`} className="block flex-grow flex flex-col">
                     <CardHeader className="pb-0">
-                      <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                        {course.title}
+                      <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200 line-clamp-2">
+                        {course.title || "Untitled Course"}
                       </CardTitle>
                     </CardHeader>
                     
                     <CardContent className="py-4 flex-grow">
-                      <p className="text-gray-400">{course.description}</p>
+                      <p className="text-gray-400 line-clamp-3">{course.description || "No description available"}</p>
                     </CardContent>
                   </Link>
                   
-                  <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                  <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4 mt-auto">
                     <div className="flex items-center">
-                      <span className="text-sm text-gray-400">{course.duration}</span>
+                      <span className="text-sm text-gray-400">{course.duration || "Self-paced"}</span>
                       <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
-                      <span className="text-sm text-gray-400">{course.modules} modules</span>
+                      <span className="text-sm text-gray-400">{course.modules || 0} modules</span>
                     </div>
                     <Link href={`/lessons/${course.id}`}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
