@@ -1,24 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { getCourses, getCourseCategories, getCourseLevels } from '@/services/api';
 
-const LessonsPage = () => {
+// Define types
+interface Course {
+  _id: string;
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  level: string;
+  duration: string;
+  modules: number;
+  categories: {
+    _id: string;
+    name: string;
+    slug: string;
+  }[];
+}
+
+interface ApiResponse {
+  status: string;
+  results: number;
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+    limit: number;
+  };
+  data: Course[];
+}
+
+const LessonsPage = ({ initialData, categories, levels }: { 
+  initialData: ApiResponse, 
+  categories: { _id: string; name: string; slug: string }[],
+  levels: string[]
+}) => {
   const { t } = useTranslation('common');
   const [currentPage, setCurrentPage] = useState(1);
-  const lessonsPerPage = 6;
+  const [activeCategory, setActiveCategory] = useState('');
+  const [activeLevel, setActiveLevel] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [courses, setCourses] = useState(initialData.data);
+  const [pagination, setPagination] = useState(initialData.pagination);
+  const [loading, setLoading] = useState(false);
   
-  // Calculate pagination values
-  const indexOfLastLesson = currentPage * lessonsPerPage;
-  const indexOfFirstLesson = indexOfLastLesson - lessonsPerPage;
-  const currentLessons = lessons.slice(indexOfFirstLesson, indexOfLastLesson);
-  const totalPages = Math.ceil(lessons.length / lessonsPerPage);
+  // Fetch courses when filters or pagination change
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const params: any = {
+          page: currentPage,
+          limit: 6
+        };
+        
+        if (activeCategory) params.category = activeCategory;
+        if (activeLevel) params.level = activeLevel;
+        if (searchTerm) params.search = searchTerm;
+        
+        const response = await getCourses(params);
+        setCourses(response.data);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchCourses();
+  }, [currentPage, activeCategory, activeLevel, searchTerm]);
   
   // Handle page changes
   const handlePrevPage = () => {
@@ -29,7 +89,7 @@ const LessonsPage = () => {
   };
   
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < pagination.pages) {
       setCurrentPage(currentPage + 1);
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
@@ -40,9 +100,20 @@ const LessonsPage = () => {
     window.scrollTo({top: 0, behavior: 'smooth'});
   };
   
+  // Handle filter changes
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category === activeCategory ? '' : category);
+    setCurrentPage(1); // Reset to first page when changing categories
+  };
+  
+  const handleLevelChange = (level: string) => {
+    setActiveLevel(level === activeLevel ? '' : level);
+    setCurrentPage(1); // Reset to first page when changing level
+  };
+  
   // Generate page numbers to display
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 1; i <= pagination.pages; i++) {
     pageNumbers.push(i);
   }
   
@@ -61,131 +132,184 @@ const LessonsPage = () => {
           </p>
         </motion.div>
         
+        {/* Filters section */}
         <motion.div 
+          className="mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <Separator className="bg-white/10 mb-12" />
-        </motion.div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {currentLessons.map((lesson, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, duration: 0.4 }}
-              whileHover={{ y: -5 }}
-            >
-              <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
-                <Link href={`/lessons/${lesson.id}`} className="block">
-                  <div className="h-48 overflow-hidden relative">
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500 filter grayscale"
-                      style={{ backgroundImage: `url(${lesson.image})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-                    <motion.div 
-                      className="absolute top-4 left-4"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index + 0.2, duration: 0.3 }}
-                    >
-                      <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium">
-                        {lesson.level}
-                      </Badge>
-                    </motion.div>
-                  </div>
-                </Link>
-                
-                <Link href={`/lessons/${lesson.id}`} className="block">
-                  <CardHeader className="pb-0">
-                    <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                      {lesson.title}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="py-4">
-                    <p className="text-gray-400">{lesson.description}</p>
-                  </CardContent>
-                </Link>
-                
-                <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
-                  <div className="flex items-center">
-                    <span className="text-sm text-gray-400">{lesson.duration}</span>
-                    <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
-                    <span className="text-sm text-gray-400">{lesson.modules} modules</span>
-                  </div>
-                  <Link href={`/lessons/${lesson.id}`}>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button 
-                        variant="outline" 
-                        className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer"
-                      >
-                        {t('lessons.viewDetails')}
-                      </Button>
-                    </motion.div>
-                  </Link>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-        
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <motion.div 
-            className="mt-12 flex justify-center items-center space-x-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                {t('pagination.previous')}
-              </Button>
-            </motion.div>
-            
-            <div className="flex space-x-2">
-              {pageNumbers.map(number => (
-                <motion.div 
-                  key={number}
-                  whileHover={{ scale: 1.1 }} 
-                  whileTap={{ scale: 0.95 }}
+          <div className="mb-4">
+            <h3 className="text-white mb-2">{t('lessons.filterByCategory')}</h3>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category, index) => (
+                <motion.div
+                  key={category._id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * number, duration: 0.3 }}
+                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Button
-                    variant={currentPage === number ? "default" : "outline"}
-                    className={`cursor-pointer ${currentPage === number 
-                      ? "bg-white text-black hover:bg-gray-200" 
-                      : "border-white text-white hover:bg-white hover:text-black"
-                    }`}
-                    onClick={() => goToPage(number)}
+                  <Badge 
+                    variant="outline" 
+                    className={`border-zinc-700 ${activeCategory === category.slug ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
+                    onClick={() => handleCategoryChange(category.slug)}
                   >
-                    {number}
-                  </Button>
+                    {category.name}
+                  </Badge>
                 </motion.div>
               ))}
             </div>
-            
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          </div>
+          
+          <div>
+            <h3 className="text-white mb-2">{t('lessons.filterByLevel')}</h3>
+            <div className="flex flex-wrap gap-2">
+              {levels.map((level, index) => (
+                <motion.div
+                  key={level}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Badge 
+                    variant="outline" 
+                    className={`border-zinc-700 ${activeLevel === level ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
+                    onClick={() => handleLevelChange(level)}
+                  >
+                    {level}
+                  </Badge>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Lessons grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {loading ? (
+            <div className="col-span-3 text-center py-12">
+              <div className="text-white text-xl">Loading...</div>
+            </div>
+          ) : courses.length === 0 ? (
+            <div className="col-span-3 text-center py-12">
+              <div className="text-white text-xl">No courses found</div>
               <Button 
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-black cursor-pointer"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
+                className="mt-4 border-white text-white hover:bg-white hover:text-black cursor-pointer"
+                onClick={() => {
+                  setActiveCategory('');
+                  setActiveLevel('');
+                  setSearchTerm('');
+                }}
               >
-                {t('pagination.next')}
+                {t('common.clearFilters')}
               </Button>
-            </motion.div>
+            </div>
+          ) : (
+            courses.map((course, index) => (
+              <motion.div
+                key={course._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * (index % 3), duration: 0.4 }}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden h-full flex flex-col group">
+                  <div className="h-48 overflow-hidden relative">
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                      style={{ backgroundImage: `url(${course.image})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70" />
+                    <div className="absolute top-3 right-3">
+                      <Badge className="bg-white text-black font-medium">
+                        {course.level}
+                      </Badge>
+                    </div>
+                  </div>
+                
+                  <Link href={`/lessons/${course.id}`} className="block flex-grow flex flex-col">
+                    <CardHeader className="pb-0">
+                      <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                        {course.title}
+                      </CardTitle>
+                    </CardHeader>
+                    
+                    <CardContent className="py-4 flex-grow">
+                      <p className="text-gray-400">{course.description}</p>
+                    </CardContent>
+                  </Link>
+                  
+                  <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                    <div className="flex items-center">
+                      <span className="text-sm text-gray-400">{course.duration}</span>
+                      <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
+                      <span className="text-sm text-gray-400">{course.modules} modules</span>
+                    </div>
+                    <Link href={`/lessons/${course.id}`}>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button 
+                          variant="outline" 
+                          className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer"
+                        >
+                          {t('lessons.viewDetails')}
+                        </Button>
+                      </motion.div>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+            ))
+          )}
+        </div>
+        
+        {/* Pagination Controls */}
+        {!loading && courses.length > 0 && (
+          <motion.div 
+            className="flex justify-center gap-2 mt-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <Button 
+              variant="outline"
+              size="sm"
+              className="border-zinc-700 text-white hover:bg-white hover:text-black cursor-pointer"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              {t('common.previous')}
+            </Button>
+            
+            {pageNumbers.map(number => (
+              <Button
+                key={number}
+                variant={currentPage === number ? "default" : "outline"}
+                size="sm"
+                className={`cursor-pointer ${
+                  currentPage === number 
+                    ? "bg-white text-black" 
+                    : "border-zinc-700 text-white hover:bg-white hover:text-black"
+                }`}
+                onClick={() => goToPage(number)}
+              >
+                {number}
+              </Button>
+            ))}
+            
+            <Button 
+              variant="outline"
+              size="sm"
+              className="border-zinc-700 text-white hover:bg-white hover:text-black cursor-pointer"
+              onClick={handleNextPage}
+              disabled={currentPage === pagination.pages}
+            >
+              {t('common.next')}
+            </Button>
           </motion.div>
         )}
       </div>
@@ -193,96 +317,32 @@ const LessonsPage = () => {
   );
 };
 
-const lessons = [
-  {
-    id: "fundamentals-consultative-selling",
-    title: "Fundamentals of Consultative Selling",
-    description: "Learn the core principles of consultative selling and how to build meaningful client relationships based on trust.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Consultative+Selling",
-    level: "Beginner",
-    duration: "4 hours",
-    modules: 5
-  },
-  {
-    id: "advanced-negotiation-tactics",
-    title: "Advanced Negotiation Tactics",
-    description: "Master high-stakes negotiation with advanced psychological techniques and strategic frameworks.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Negotiation+Tactics",
-    level: "Advanced",
-    duration: "6 hours",
-    modules: 8
-  },
-  {
-    id: "objection-handling-mastery",
-    title: "Objection Handling Mastery",
-    description: "Turn rejections into opportunities with proven methods to address and overcome customer objections.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Objection+Handling",
-    level: "Intermediate",
-    duration: "3 hours",
-    modules: 4
-  },
-  {
-    id: "sales-closing-techniques",
-    title: "Sales Closing Techniques",
-    description: "Learn powerful closing techniques that feel natural and lead to higher conversion rates.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Closing+Techniques",
-    level: "Intermediate",
-    duration: "5 hours",
-    modules: 6
-  },
-  {
-    id: "digital-sales-strategies",
-    title: "Digital Sales Strategies",
-    description: "Adapt your sales approach for the digital age with effective online communication tactics.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Digital+Sales",
-    level: "Advanced",
-    duration: "8 hours",
-    modules: 10
-  },
-  {
-    id: "enterprise-sales-mastery",
-    title: "Enterprise Sales Mastery",
-    description: "Scale your approach to target and close major enterprise deals with complex buying committees.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Enterprise+Sales",
-    level: "Advanced",
-    duration: "10 hours",
-    modules: 12
-  },
-  {
-    id: "sales-pipeline-management",
-    title: "Sales Pipeline Management",
-    description: "Optimize your sales pipeline with proven strategies to ensure a consistent flow of qualified opportunities.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Pipeline+Management",
-    level: "Intermediate",
-    duration: "4 hours",
-    modules: 5
-  },
-  {
-    id: "sales-psychology-mastery",
-    title: "Sales Psychology Mastery",
-    description: "Understand and apply psychological principles to influence buying decisions and improve sales results.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Sales+Psychology",
-    level: "Advanced",
-    duration: "7 hours",
-    modules: 8
-  },
-  {
-    id: "value-based-selling",
-    title: "Value-Based Selling",
-    description: "Move beyond price discussions by focusing on the unique value your solutions provide to customers.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Value+Selling",
-    level: "Intermediate",
-    duration: "5 hours",
-    modules: 6
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  try {
+    // Fetch initial data
+    const coursesResponse = await getCourses({ page: 1, limit: 6 });
+    const categoriesResponse = await getCourseCategories();
+    const levelsResponse = await getCourseLevels();
+    
+    return {
+      props: {
+        ...(await serverSideTranslations(locale || 'en', ['common'])),
+        initialData: coursesResponse,
+        categories: categoriesResponse.data,
+        levels: levelsResponse.data
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching initial data:", error);
+    return {
+      props: {
+        ...(await serverSideTranslations(locale || 'en', ['common'])),
+        initialData: { status: "success", results: 0, pagination: { total: 0, page: 1, pages: 1, limit: 6 }, data: [] },
+        categories: [],
+        levels: []
+      },
+    };
   }
-];
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
-    },
-  };
 };
 
 export default LessonsPage; 
