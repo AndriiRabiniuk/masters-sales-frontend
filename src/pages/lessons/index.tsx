@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -52,6 +54,18 @@ const LessonsPage = ({ initialData, categories, levels }: {
   const [courses, setCourses] = useState(initialData.data);
   const [pagination, setPagination] = useState(initialData.pagination);
   const [loading, setLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  
+  // Debounce search term to avoid too many API calls
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+    
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
   
   // Fetch courses when filters or pagination change
   useEffect(() => {
@@ -65,7 +79,7 @@ const LessonsPage = ({ initialData, categories, levels }: {
         
         if (activeCategory) params.category = activeCategory;
         if (activeLevel) params.level = activeLevel;
-        if (searchTerm) params.search = searchTerm;
+        if (debouncedSearchTerm) params.search = debouncedSearchTerm;
         
         const response = await getCourses(params);
         setCourses(response.data);
@@ -78,7 +92,7 @@ const LessonsPage = ({ initialData, categories, levels }: {
     };
     
     fetchCourses();
-  }, [currentPage, activeCategory, activeLevel, searchTerm]);
+  }, [currentPage, activeCategory, activeLevel, debouncedSearchTerm]);
   
   // Handle page changes
   const handlePrevPage = () => {
@@ -132,6 +146,28 @@ const LessonsPage = ({ initialData, categories, levels }: {
           </p>
         </motion.div>
         
+        {/* Search Bar */}
+        <motion.div
+          className="mb-8 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Input 
+              type="text"
+              placeholder={t('lessons.searchPlaceholder') || "Search courses..."}
+              className="pl-10 bg-zinc-900 border-zinc-700 text-white rounded-lg focus-visible:ring-white"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+        </motion.div>
+        
         {/* Filters section */}
         <motion.div 
           className="mb-8"
@@ -139,15 +175,30 @@ const LessonsPage = ({ initialData, categories, levels }: {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <div className="mb-4">
-            <h3 className="text-white mb-2">{t('lessons.filterByCategory')}</h3>
+          <div className="mb-6">
+            <h3 className="text-white text-lg font-medium mb-3">{t('lessons.filterByCategory')}</h3>
             <div className="flex flex-wrap gap-2">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Badge 
+                  variant="outline" 
+                  className={`border-zinc-700 ${activeCategory === '' ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
+                  onClick={() => handleCategoryChange('')}
+                >
+                  All Categories
+                </Badge>
+              </motion.div>
               {categories.map((category, index) => (
                 <motion.div
                   key={category._id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  transition={{ delay: 0.1 * (index + 1), duration: 0.3 }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -164,14 +215,29 @@ const LessonsPage = ({ initialData, categories, levels }: {
           </div>
           
           <div>
-            <h3 className="text-white mb-2">{t('lessons.filterByLevel')}</h3>
+            <h3 className="text-white text-lg font-medium mb-3">{t('lessons.filterByLevel')}</h3>
             <div className="flex flex-wrap gap-2">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Badge 
+                  variant="outline" 
+                  className={`border-zinc-700 ${activeLevel === '' ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
+                  onClick={() => handleLevelChange('')}
+                >
+                  All Levels
+                </Badge>
+              </motion.div>
               {levels.map((level, index) => (
                 <motion.div
                   key={level}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  transition={{ delay: 0.1 * (index + 1), duration: 0.3 }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

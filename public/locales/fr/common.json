@@ -25,12 +25,42 @@
     "subtitle": "Restez en avance avec notre analyse d'experts et nos conseils pratiques sur les techniques de vente modernes et les tendances de l'industrie.",
     "viewArticle": "Voir l'Article",
     "noResults": "Aucun article trouvé pour cette catégorie.",
-    "viewAllArticles": "Voir Tous les Articles"
+    "viewAllArticles": "Voir Tous les Articles",
+    "loading": "Chargement de l'article...",
+    "notFound": "Article non trouvé",
+    "backToAllArticles": "Retour à tous les articles",
+    "shareThisArticle": "Partager cet article",
+    "relatedArticles": "Articles connexes",
+    "subscribeToNewsletter": "Abonnez-vous à la newsletter",
+    "newsletterDescription": "Recevez les derniers conseils et stratégies de vente dans votre boîte de réception.",
+    "yourEmail": "Votre adresse e-mail",
+    "subscribe": "S'abonner",
+    "searchPlaceholder": "Rechercher des articles...",
+    "filterByCategory": "Filtrer par catégorie"
   },
   "lessons": {
     "title": "Maîtrisez Vos Compétences de Vente",
     "subtitle": "Des cours complets conçus pour élever votre performance de vente grâce à des techniques et stratégies éprouvées.",
-    "viewDetails": "Voir les Détails"
+    "viewDetails": "Voir les Détails",
+    "filterByCategory": "Filtrer par Catégorie",
+    "filterByLevel": "Filtrer par Niveau",
+    "loading": "Chargement du cours...",
+    "notFound": "Cours non trouvé",
+    "backToAllLessons": "Retour à tous les cours",
+    "overview": "Aperçu du cours",
+    "whatYouWillLearn": "Ce que vous apprendrez",
+    "courseContent": "Contenu du cours",
+    "enrollNow": "S'inscrire maintenant",
+    "fullLifetimeAccess": "Accès complet à vie",
+    "detailedModules": "modules détaillés",
+    "certificateOfCompletion": "Certificat d'achèvement",
+    "moneyBackGuarantee": "Garantie de remboursement de 30 jours",
+    "searchPlaceholder": "Rechercher des cours..."
+  },
+  "common": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "clearFilters": "Effacer les filtres"
   },
   "pagination": {
     "previous": "Précédent",

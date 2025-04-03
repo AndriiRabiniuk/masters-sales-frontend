@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -48,6 +50,18 @@ const ArticlesPage = ({ initialData, categories }: {
   const [blogs, setBlogs] = useState(initialData.data);
   const [pagination, setPagination] = useState(initialData.pagination);
   const [loading, setLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  
+  // Debounce search term to avoid too many API calls
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+    
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
   
   // Fetch blogs when filters or pagination change
   useEffect(() => {
@@ -60,7 +74,7 @@ const ArticlesPage = ({ initialData, categories }: {
         };
         
         if (activeCategory) params.category = activeCategory;
-        if (searchTerm) params.search = searchTerm;
+        if (debouncedSearchTerm) params.search = debouncedSearchTerm;
         
         const response = await getBlogs(params);
         setBlogs(response.data);
@@ -73,7 +87,7 @@ const ArticlesPage = ({ initialData, categories }: {
     };
     
     fetchBlogs();
-  }, [currentPage, activeCategory, searchTerm]);
+  }, [currentPage, activeCategory, debouncedSearchTerm]);
   
   // Handle page changes
   const handlePrevPage = () => {
@@ -122,13 +136,36 @@ const ArticlesPage = ({ initialData, categories }: {
           </p>
         </motion.div>
         
+        {/* Search Bar */}
+        <motion.div
+          className="mb-8 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Input 
+              type="text"
+              placeholder={t('articles.searchPlaceholder') || "Search articles..."}
+              className="pl-10 bg-zinc-900 border-zinc-700 text-white rounded-lg focus-visible:ring-white"
+              value={searchTerm}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+        </motion.div>
+        
         <motion.div 
           className="mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <div className="flex flex-wrap gap-2 justify-center">
+          <h3 className="text-white text-lg font-medium mb-3">{t('articles.filterByCategory') || "Filter by Category"}</h3>
+          <div className="flex flex-wrap gap-2">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -141,7 +178,7 @@ const ArticlesPage = ({ initialData, categories }: {
                 className={`border-zinc-700 ${activeCategory === '' ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
                 onClick={() => handleCategoryChange('')}
               >
-                All
+                All Categories
               </Badge>
             </motion.div>
             {categories.map((category, index) => (

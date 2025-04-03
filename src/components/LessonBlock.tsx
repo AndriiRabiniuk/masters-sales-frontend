@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -14,9 +14,45 @@ import {
 } from "./ui/carousel";
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
+import { getCourses } from '@/services/api';
+
+interface Course {
+  _id: string;
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  level: string;
+  duration: string;
+  modules: number;
+  categories: {
+    _id: string;
+    name: string;
+    slug: string;
+  }[];
+}
 
 const LessonBlock = () => {
   const { t } = useTranslation('common');
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        // Fetch featured courses (first 5)
+        const response = await getCourses({ limit: 5 });
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchCourses();
+  }, []);
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -92,75 +128,81 @@ const LessonBlock = () => {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
         >
-          <ScrollArea className="w-full" type="always">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-4">
-                {lessons.map((lesson, index) => (
-                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                    <motion.div
-                      initial={{ opacity: 0, y: 50 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      whileHover={{ y: -8 }}
-                    >
-                      <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
-                        <Link href={`/lessons/${lesson.id}`} className="h-48 overflow-hidden relative block">
-                          <motion.div 
-                            className="absolute inset-0 bg-cover bg-center filter grayscale"
-                            style={{ backgroundImage: `url(${lesson.image})` }}
-                            whileHover={{ scale: 1.1, filter: "grayscale(70%)" }}
-                            transition={{ duration: 0.4 }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
-                          <div className="absolute top-4 left-4">
-                            <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
-                              {lesson.level}
-                            </Badge>
-                          </div>
-                        </Link>
-                        
-                        <Link href={`/lessons/${lesson.id}`} className="block cursor-pointer">
-                          <CardHeader className="pb-0">
-                            <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
-                              {lesson.title}
-                            </CardTitle>
-                          </CardHeader>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="text-white text-xl">Loading courses...</div>
+            </div>
+          ) : (
+            <ScrollArea className="w-full" type="always">
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-4">
+                  {courses.map((course, index) => (
+                    <CarouselItem key={course._id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        whileHover={{ y: -8 }}
+                      >
+                        <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden group h-full cursor-pointer">
+                          <Link href={`/lessons/${course.id}`} className="h-48 overflow-hidden relative block">
+                            <motion.div 
+                              className="absolute inset-0 bg-cover bg-center filter grayscale"
+                              style={{ backgroundImage: `url(${course.image})` }}
+                              whileHover={{ scale: 1.1, filter: "grayscale(70%)" }}
+                              transition={{ duration: 0.4 }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-70"></div>
+                            <div className="absolute top-4 left-4">
+                              <Badge variant="outline" className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 text-sm font-medium cursor-pointer">
+                                {course.level}
+                              </Badge>
+                            </div>
+                          </Link>
                           
-                          <CardContent className="py-4">
-                            <p className="text-gray-400">{lesson.description}</p>
-                          </CardContent>
-                        </Link>
-                        
-                        <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
-                          <div className="flex items-center">
-                            <span className="text-sm text-gray-400">{lesson.duration}</span>
-                            <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
-                            <span className="text-sm text-gray-400">{lesson.modules} modules</span>
-                          </div>
-                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Link href={`/lessons/${lesson.id}`}>
-                              <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
-                                {t('lessons.viewDetails')}
-                              </Button>
-                            </Link>
-                          </motion.div>
-                        </CardFooter>
-                      </Card>
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex justify-center mt-8">
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2 cursor-pointer" />
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black cursor-pointer" />
-                </motion.div>
-              </div>
-            </Carousel>
-          </ScrollArea>
+                          <Link href={`/lessons/${course.id}`} className="block cursor-pointer">
+                            <CardHeader className="pb-0">
+                              <CardTitle className="text-xl font-bold text-white group-hover:text-gray-200">
+                                {course.title}
+                              </CardTitle>
+                            </CardHeader>
+                            
+                            <CardContent className="py-4">
+                              <p className="text-gray-400">{course.description}</p>
+                            </CardContent>
+                          </Link>
+                          
+                          <CardFooter className="flex justify-between items-center border-t border-zinc-800 pt-4">
+                            <div className="flex items-center">
+                              <span className="text-sm text-gray-400">{course.duration}</span>
+                              <Separator orientation="vertical" className="mx-2 h-4 bg-zinc-700" />
+                              <span className="text-sm text-gray-400">{course.modules} modules</span>
+                            </div>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                              <Link href={`/lessons/${course.id}`}>
+                                <Button variant="outline" className="text-white border-zinc-700 hover:bg-white hover:text-black cursor-pointer">
+                                  {t('lessons.viewDetails')}
+                                </Button>
+                              </Link>
+                            </motion.div>
+                          </CardFooter>
+                        </Card>
+                      </motion.div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center mt-8">
+                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                    <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black mr-2 cursor-pointer" />
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                    <CarouselNext className="relative inset-0 translate-y-0 bg-white/10 text-white hover:bg-white hover:text-black cursor-pointer" />
+                  </motion.div>
+                </div>
+              </Carousel>
+            </ScrollArea>
+          )}
         </motion.div>
         
         <motion.div 
@@ -182,53 +224,5 @@ const LessonBlock = () => {
     </div>
   );
 };
-
-const lessons = [
-  {
-    id: "fundamentals-consultative-selling",
-    title: "Fundamentals of Consultative Selling",
-    description: "Learn the core principles of consultative selling and how to build meaningful client relationships based on trust.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Consultative+Selling",
-    level: "Beginner",
-    duration: "4 hours",
-    modules: 5
-  },
-  {
-    id: "advanced-negotiation-tactics",
-    title: "Advanced Negotiation Tactics",
-    description: "Master high-stakes negotiation with advanced psychological techniques and strategic frameworks.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Negotiation+Tactics",
-    level: "Advanced",
-    duration: "6 hours",
-    modules: 8
-  },
-  {
-    id: "objection-handling-mastery",
-    title: "Objection Handling Mastery",
-    description: "Turn rejections into opportunities with proven methods to address and overcome customer objections.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Objection+Handling",
-    level: "Intermediate",
-    duration: "3 hours",
-    modules: 4
-  },
-  {
-    id: "sales-closing-techniques",
-    title: "Sales Closing Techniques",
-    description: "Learn powerful closing techniques that feel natural and lead to higher conversion rates.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Closing+Techniques",
-    level: "Intermediate",
-    duration: "5 hours",
-    modules: 6
-  },
-  {
-    id: "digital-sales-strategies",
-    title: "Digital Sales Strategies",
-    description: "Adapt your sales approach for the digital age with effective online communication tactics.",
-    image: "https://placehold.co/600x400/111827/6B7280?text=Digital+Sales",
-    level: "Advanced",
-    duration: "8 hours",
-    modules: 10
-  }
-];
 
 export default LessonBlock; 
