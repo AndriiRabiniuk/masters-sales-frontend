@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { getCourses, getCourseCategories, getCourseLevels } from '@/services/api';
+import { getCourses, getCourseCategories } from '@/services/api';
 
 // Define types
 interface Course {
@@ -41,12 +41,15 @@ interface ApiResponse {
   data: Course[];
 }
 
-const LessonsPage = ({ initialData, categories, levels }: { 
+const LessonsPage = ({ initialData, categories }: { 
   initialData: ApiResponse, 
-  categories: { _id: string; name: string; slug: string }[],
-  levels: string[]
+  categories: { _id: string; name: string; slug: string }[]
 }) => {
   const { t } = useTranslation('common');
+  
+  // Hardcoded levels instead of from API
+  const levels = ["Beginner", "Intermediate", "Advanced"];
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState('');
   const [activeLevel, setActiveLevel] = useState('');
@@ -72,6 +75,12 @@ const LessonsPage = ({ initialData, categories, levels }: {
     const fetchCourses = async () => {
       try {
         setLoading(true);
+        console.log("Fetching with params:", { 
+          category: activeCategory, 
+          level: activeLevel,
+          search: debouncedSearchTerm
+        });
+        
         const params: any = {
           page: currentPage,
           limit: 6
@@ -82,6 +91,7 @@ const LessonsPage = ({ initialData, categories, levels }: {
         if (debouncedSearchTerm) params.search = debouncedSearchTerm;
         
         const response = await getCourses(params);
+        console.log("API Response:", response);
         setCourses(response.data);
         setPagination(response.pagination);
       } catch (error) {
@@ -116,11 +126,14 @@ const LessonsPage = ({ initialData, categories, levels }: {
   
   // Handle filter changes
   const handleCategoryChange = (category: string) => {
+    console.log("Setting category to:", category);
     setActiveCategory(category === activeCategory ? '' : category);
     setCurrentPage(1); // Reset to first page when changing categories
   };
   
   const handleLevelChange = (level: string) => {
+    console.log("Setting level to:", level);
+    // Use the exact level string as it appears in the hardcoded levels
     setActiveLevel(level === activeLevel ? '' : level);
     setCurrentPage(1); // Reset to first page when changing level
   };
@@ -227,7 +240,10 @@ const LessonsPage = ({ initialData, categories, levels }: {
                 <Badge 
                   variant="outline" 
                   className={`border-zinc-700 ${activeLevel === '' ? 'bg-white text-black' : 'text-gray-300 hover:text-white'} px-3 py-1 cursor-pointer`}
-                  onClick={() => handleLevelChange('')}
+                  onClick={() => {
+                    console.log("Clearing level filter");
+                    handleLevelChange('');
+                  }}
                 >
                   All Levels
                 </Badge>
@@ -389,14 +405,12 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     // Fetch initial data
     const coursesResponse = await getCourses({ page: 1, limit: 6 });
     const categoriesResponse = await getCourseCategories();
-    const levelsResponse = await getCourseLevels();
     
     return {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
         initialData: coursesResponse,
-        categories: categoriesResponse.data,
-        levels: levelsResponse.data
+        categories: categoriesResponse.data
       },
     };
   } catch (error) {
@@ -405,8 +419,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
         initialData: { status: "success", results: 0, pagination: { total: 0, page: 1, pages: 1, limit: 6 }, data: [] },
-        categories: [],
-        levels: []
+        categories: []
       },
     };
   }

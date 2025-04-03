@@ -47,6 +47,7 @@ export const getCourses = async (params?: {
   level?: string;
 }) => {
   try {
+    console.log("API getCourses called with params:", params);
     const response = await axios.get(`${API_URL}/courses`, { params });
     return response.data;
   } catch (error) {
@@ -71,16 +72,6 @@ export const getCourseCategories = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching course categories:', error);
-    throw error;
-  }
-};
-
-export const getCourseLevels = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/courses/levels`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching course levels:', error);
     throw error;
   }
 }; 
