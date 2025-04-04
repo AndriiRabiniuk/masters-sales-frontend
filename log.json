@@ -1,1 +1,1 @@
-Enhance UI components and update dependencies for improved functionality and styling.
+Refactor HeroBlock, LessonBlock, and PostBlock components to improve image loading with placeholder images.
