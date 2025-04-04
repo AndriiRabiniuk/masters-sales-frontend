@@ -33,6 +33,7 @@ interface Blog {
   date: string;
   categories: BlogCategory[];
   content: ContentSection[];
+  htmlContent?: string;
 }
 
 interface BlogResponse {
@@ -128,6 +129,11 @@ const ArticleDetailPage = ({ blog, relatedArticles }: {
                   ))}
                 </div>
               ))}
+              
+              {/* Display HTML content if available */}
+              {blog.htmlContent && (
+                <div className="mt-8" dangerouslySetInnerHTML={{ __html: blog.htmlContent }}></div>
+              )}
             </motion.div>
             
             <Separator className="my-12 bg-white/10" />
@@ -249,10 +255,30 @@ export const getServerSideProps: GetServerSideProps = async ({ params, locale })
     const id = params?.id as string;
     const response = await getBlogById(id);
     
+    // Add mock HTML content for demonstration
+    const blogData = response.data;
+    if (!blogData.htmlContent) {
+      blogData.htmlContent = `
+        <div class="rich-html-content">
+          <h3 class="text-2xl font-bold text-white mt-8 mb-4">HTML Content Section</h3>
+          <p class="text-gray-300 mb-4">This is rich HTML content that comes directly from the backend. It can include <strong>formatting</strong>, <em>styling</em>, and more.</p>
+          <div class="bg-zinc-800 p-4 rounded-md my-4">
+            <p class="text-gray-300">This is a custom styled box with important information.</p>
+            <ul class="list-disc pl-5 mt-2">
+              <li class="text-gray-300">Point one about the article</li>
+              <li class="text-gray-300">Another important point</li>
+              <li class="text-gray-300">Final key takeaway</li>
+            </ul>
+          </div>
+          <p class="text-gray-300 mb-4">You can replace this with actual HTML content from your backend later.</p>
+        </div>
+      `;
+    }
+    
     return {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
-        blog: response.data,
+        blog: blogData,
         relatedArticles
       },
     };

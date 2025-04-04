@@ -22,6 +22,7 @@ interface Blog {
   author: string;
   date: string;
   categories: BlogCategory[];
+  htmlContent?: string;
 }
 
 const PostBlock = () => {

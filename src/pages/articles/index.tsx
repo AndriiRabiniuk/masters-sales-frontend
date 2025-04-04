@@ -25,6 +25,7 @@ interface Blog {
     name: string;
     slug: string;
   }[];
+  htmlContent?: string;
 }
 
 interface ApiResponse {
