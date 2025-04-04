@@ -8,6 +8,7 @@ export const getBlogs = async (params?: {
   limit?: number;
   search?: string;
   category?: string;
+  audience?: string;
 }) => {
   try {
     const response = await axios.get(`${API_URL}/blogs`, { params });
@@ -18,9 +19,9 @@ export const getBlogs = async (params?: {
   }
 };
 
-export const getBlogById = async (id: string) => {
+export const getBlogById = async (id: string, params?: { audience?: string }) => {
   try {
-    const response = await axios.get(`${API_URL}/blogs/${id}`);
+    const response = await axios.get(`${API_URL}/blogs/${id}`, { params });
     return response.data;
   } catch (error) {
     console.error(`Error fetching blog with ID ${id}:`, error);
@@ -45,6 +46,7 @@ export const getCourses = async (params?: {
   search?: string;
   category?: string;
   level?: string;
+  audience?: string;
 }) => {
   try {
     console.log("API getCourses called with params:", params);
@@ -56,9 +58,9 @@ export const getCourses = async (params?: {
   }
 };
 
-export const getCourseById = async (id: string) => {
+export const getCourseById = async (id: string, params?: { audience?: string }) => {
   try {
-    const response = await axios.get(`${API_URL}/courses/${id}`);
+    const response = await axios.get(`${API_URL}/courses/${id}`, { params });
     return response.data;
   } catch (error) {
     console.error(`Error fetching course with ID ${id}:`, error);

@@ -26,7 +26,7 @@ interface Blog {
 }
 
 const PostBlock = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -35,7 +35,11 @@ const PostBlock = () => {
       try {
         setLoading(true);
         // Fetch latest blogs (first 3)
-        const response = await getBlogs({ limit: 3 });
+        const currentLang = i18n.language;
+        const response = await getBlogs({ 
+          limit: 3,
+          audience: currentLang === 'fr' ? 'french' : 'english'
+        });
         setBlogs(response.data);
       } catch (error) {
         console.error('Error fetching blogs:', error);
@@ -45,7 +49,7 @@ const PostBlock = () => {
     };
     
     fetchBlogs();
-  }, []);
+  }, [i18n.language]);
   
   return (
     <div className="bg-zinc-950 text-white py-20">

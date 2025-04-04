@@ -45,7 +45,7 @@ const LessonsPage = ({ initialData, categories }: {
   initialData: ApiResponse, 
   categories: { _id: string; name: string; slug: string }[]
 }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   
   // Hardcoded levels instead of from API
   const levels = ["Beginner", "Intermediate", "Advanced"];
@@ -90,6 +90,10 @@ const LessonsPage = ({ initialData, categories }: {
         if (activeLevel) params.level = activeLevel;
         if (debouncedSearchTerm) params.search = debouncedSearchTerm;
         
+        // Add audience parameter based on current language
+        const currentLang = i18n.language;
+        params.audience = currentLang === 'fr' ? 'french' : 'english';
+        
         const response = await getCourses(params);
         console.log("API Response:", response);
         setCourses(response.data);
@@ -102,7 +106,7 @@ const LessonsPage = ({ initialData, categories }: {
     };
     
     fetchCourses();
-  }, [currentPage, activeCategory, activeLevel, debouncedSearchTerm]);
+  }, [currentPage, activeCategory, activeLevel, debouncedSearchTerm, i18n.language]);
   
   // Handle page changes
   const handlePrevPage = () => {
@@ -403,7 +407,11 @@ const LessonsPage = ({ initialData, categories }: {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   try {
     // Fetch initial data
-    const coursesResponse = await getCourses({ page: 1, limit: 6 });
+    const coursesResponse = await getCourses({ 
+      page: 1, 
+      limit: 6,
+      audience: locale === 'fr' ? 'french' : 'english'
+    });
     const categoriesResponse = await getCourseCategories();
     
     return {

@@ -247,12 +247,14 @@ const LessonDetailPage = ({ course }: { course: Course | null }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params, locale }) => {
   try {
     const id = params?.id as string;
-    const response = await getCourseById(id);
+    const courseResponse = await getCourseById(id, {
+      audience: locale === 'fr' ? 'french' : 'english'
+    });
     
     return {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
-        course: response.data
+        course: courseResponse.data
       },
     };
   } catch (error) {

@@ -28,6 +28,15 @@ interface Blog {
   htmlContent?: string;
 }
 
+// Update the API parameters to include audience
+interface BlogParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+  audience?: string;
+}
+
 interface ApiResponse {
   status: string;
   results: number;
@@ -44,7 +53,7 @@ const ArticlesPage = ({ initialData, categories }: {
   initialData: ApiResponse, 
   categories: { _id: string; name: string; slug: string }[]
 }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,13 +78,17 @@ const ArticlesPage = ({ initialData, categories }: {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const params: any = {
+        const params: BlogParams = {
           page: currentPage,
           limit: 6
         };
         
         if (activeCategory) params.category = activeCategory;
         if (debouncedSearchTerm) params.search = debouncedSearchTerm;
+        
+        // Add audience parameter based on current language
+        const currentLang = i18n.language;
+        params.audience = currentLang === 'fr' ? 'french' : 'english';
         
         const response = await getBlogs(params);
         setBlogs(response.data);
@@ -88,7 +101,7 @@ const ArticlesPage = ({ initialData, categories }: {
     };
     
     fetchBlogs();
-  }, [currentPage, activeCategory, debouncedSearchTerm]);
+  }, [currentPage, activeCategory, debouncedSearchTerm, i18n.language]);
   
   // Handle page changes
   const handlePrevPage = () => {
@@ -349,7 +362,11 @@ const ArticlesPage = ({ initialData, categories }: {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   try {
     // Fetch initial data
-    const blogsResponse = await getBlogs({ page: 1, limit: 6 });
+    const blogsResponse = await getBlogs({ 
+      page: 1, 
+      limit: 6,
+      audience: locale === 'fr' ? 'french' : 'english' 
+    });
     const categoriesResponse = await getBlogCategories();
     
     return {

@@ -253,7 +253,9 @@ const relatedArticles: RelatedArticle[] = [
 export const getServerSideProps: GetServerSideProps = async ({ params, locale }) => {
   try {
     const id = params?.id as string;
-    const response = await getBlogById(id);
+    const response = await getBlogById(id, {
+      audience: locale === 'fr' ? 'french' : 'english'
+    });
     
     // Add mock HTML content for demonstration
     const blogData = response.data;

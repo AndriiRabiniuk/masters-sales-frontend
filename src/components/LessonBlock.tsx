@@ -33,7 +33,7 @@ interface Course {
 }
 
 const LessonBlock = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -42,7 +42,11 @@ const LessonBlock = () => {
       try {
         setLoading(true);
         // Fetch featured courses (first 5)
-        const response = await getCourses({ limit: 5 });
+        const currentLang = i18n.language;
+        const response = await getCourses({ 
+          limit: 5,
+          audience: currentLang === 'fr' ? 'french' : 'english'
+        });
         setCourses(response.data);
       } catch (error) {
         console.error('Error fetching courses:', error);
@@ -52,7 +56,7 @@ const LessonBlock = () => {
     };
     
     fetchCourses();
-  }, []);
+  }, [i18n.language]);
   
   const containerVariants = {
     hidden: { opacity: 0 },
