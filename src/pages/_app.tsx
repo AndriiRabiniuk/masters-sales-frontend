@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navbar from "@/components/Navbar";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 // Disable Next.js error overlay
 if (typeof window !== 'undefined') {
@@ -19,7 +20,16 @@ if (typeof window !== 'undefined') {
   }
 }
 
+// Function to detect browser language (same as in LanguageContext)
+const detectBrowserLanguage = (): string => {
+  if (typeof window === 'undefined') return 'en';
+  const browserLang = navigator.language || (navigator as any).userLanguage;
+  return browserLang && browserLang.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+};
+
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
   // Disable error overlay on client side
   useEffect(() => {
     // This will prevent the browser from displaying the error overlay
@@ -39,6 +49,23 @@ function App({ Component, pageProps }: AppProps) {
       return () => {
         console.error = originalConsoleError;
       };
+    }
+  }, []);
+
+  // Early language detection on application init
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !router.locale) {
+      // Get saved preference or detect from browser
+      const savedLanguage = localStorage.getItem('preferredLanguage');
+      const detectedLanguage = savedLanguage || detectBrowserLanguage();
+      
+      // Set the language in the URL if needed
+      if (detectedLanguage && (!router.locale || router.locale !== detectedLanguage)) {
+        router.push(router.pathname, router.asPath, { 
+          locale: detectedLanguage,
+          shallow: true 
+        });
+      }
     }
   }, []);
 

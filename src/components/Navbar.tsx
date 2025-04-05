@@ -94,6 +94,7 @@ const Navbar = () => {
                 size="sm" 
                 className="rounded-full border-white text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
                 onClick={toggleLanguage}
+                title={language === 'en' ? 'Switch to French' : 'Switch to English'}
               >
                 {language === 'en' ? 'FR' : 'EN'}
               </Button>
