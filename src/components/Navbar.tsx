@@ -37,7 +37,7 @@ const Navbar = () => {
     { href: "/articles", label: t('navbar.articles') },
     { href: "http://3.135.221.43:3000/", label: t('navbar.rmk6') },
     { href: "/articles", label: t('navbar.resources') },
-    { href: "#", label: t('navbar.login') }
+    { href: "/signup", label: t('navbar.signup') || 'Sign Up' }
   ];
 
   return (

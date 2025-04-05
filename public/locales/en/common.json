@@ -5,7 +5,21 @@
     "articles": "Articles",
     "rmk6": "RMK6",
     "resources": "Resources",
-    "login": "Login/sign"
+    "signup": "Sign Up"
+  },
+  "signup": {
+    "pageTitle": "Join our Community",
+    "pageSubtitle": "Create your account to access exclusive content and features.",
+    "title": "Create an Account",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Create a secure password",
+    "submit": "Sign Up",
+    "submitting": "Signing up...",
+    "successMessage": "Registration successful! You can now log in."
   },
   "heroBlock": {
     "title": "Master Your Sales Skills",

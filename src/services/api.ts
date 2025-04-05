@@ -76,4 +76,15 @@ export const getCourseCategories = async () => {
     console.error('Error fetching course categories:', error);
     throw error;
   }
+};
+
+// Auth API
+export const register = async (userData: { name: string; email: string; password: string }) => {
+  try {
+    const response = await axios.post(`${API_URL}/users/register`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
 }; 

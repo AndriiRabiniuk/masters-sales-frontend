@@ -5,7 +5,21 @@
     "articles": "Articles",
     "rmk6": "RMK6",
     "resources": "Ressources",
-    "login": "Connexion/Inscription"
+    "signup": "S'inscrire"
+  },
+  "signup": {
+    "pageTitle": "Rejoignez notre Communauté",
+    "pageSubtitle": "Créez votre compte pour accéder à du contenu et des fonctionnalités exclusifs.",
+    "title": "Créer un Compte",
+    "name": "Nom Complet",
+    "namePlaceholder": "Entrez votre nom",
+    "email": "Adresse E-mail",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "password": "Mot de Passe",
+    "passwordPlaceholder": "Créez un mot de passe sécurisé",
+    "submit": "S'inscrire",
+    "submitting": "Inscription en cours...",
+    "successMessage": "Inscription réussie ! Vous pouvez maintenant vous connecter."
   },
   "heroBlock": {
     "title": "Maîtrisez Vos Compétences de Vente",
