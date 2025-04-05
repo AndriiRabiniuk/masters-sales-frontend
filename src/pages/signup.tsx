@@ -19,12 +19,12 @@ const SignupPage = () => {
     <div className="min-h-screen bg-black">
       <div className="container mx-auto px-6 py-16">
         <motion.div 
-          className="mb-12 text-center"
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             {t('signup.pageTitle') || 'Join our Community'}
           </h1>
           <p className="text-gray-400 text-xl max-w-2xl mx-auto">

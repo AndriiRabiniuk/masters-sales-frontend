@@ -92,24 +92,24 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
       className="w-full max-w-md mx-auto"
     >
       <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-white mb-6">{t('signup.title') || 'Create an Account'}</h2>
+        <h2 className="text-2xl font-bold text-white mb-8">{t('signup.title') || 'Create an Account'}</h2>
         
         {error && (
-          <Alert className="mb-6 bg-red-900/20 border-red-900 text-red-300">
+          <Alert className="mb-8 bg-red-900/20 border-red-900 text-red-300">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
         
         {success && (
-          <Alert className="mb-6 bg-green-900/20 border-green-900 text-green-300">
+          <Alert className="mb-8 bg-green-900/20 border-green-900 text-green-300">
             <AlertDescription>{t('signup.successMessage') || 'Registration successful! You can now log in.'}</AlertDescription>
           </Alert>
         )}
         
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="name" className="text-white">{t('signup.name') || 'Full Name'}</Label>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-white text-base">{t('signup.name') || 'Full Name'}</Label>
               <Input
                 id="name"
                 name="name"
@@ -117,13 +117,13 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="bg-zinc-800 border-zinc-700 text-white mt-1"
+                className="bg-zinc-800 border-zinc-700 text-white mt-2 h-12 px-4"
                 placeholder={t('signup.namePlaceholder') || 'Enter your name'}
               />
             </div>
             
-            <div>
-              <Label htmlFor="email" className="text-white">{t('signup.email') || 'Email Address'}</Label>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-white text-base">{t('signup.email') || 'Email Address'}</Label>
               <Input
                 id="email"
                 name="email"
@@ -131,13 +131,13 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="bg-zinc-800 border-zinc-700 text-white mt-1"
+                className="bg-zinc-800 border-zinc-700 text-white mt-2 h-12 px-4"
                 placeholder={t('signup.emailPlaceholder') || 'Enter your email'}
               />
             </div>
             
-            <div>
-              <Label htmlFor="password" className="text-white">{t('signup.password') || 'Password'}</Label>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-white text-base">{t('signup.password') || 'Password'}</Label>
               <Input
                 id="password"
                 name="password"
@@ -145,7 +145,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="bg-zinc-800 border-zinc-700 text-white mt-1"
+                className="bg-zinc-800 border-zinc-700 text-white mt-2 h-12 px-4"
                 placeholder={t('signup.passwordPlaceholder') || 'Create a secure password'}
               />
             </div>
@@ -153,11 +153,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="pt-4"
+              className="pt-6"
             >
               <Button
                 type="submit"
-                className="w-full bg-white text-black hover:bg-gray-200"
+                className="w-full bg-white text-black hover:bg-gray-200 h-12 text-base font-medium"
                 disabled={loading}
               >
                 {loading ? (
