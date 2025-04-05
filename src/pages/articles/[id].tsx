@@ -41,17 +41,7 @@ interface BlogResponse {
   data: Blog;
 }
 
-// Define the type for a related article
-type RelatedArticle = {
-  id: string;
-  title: string;
-  date: string;
-};
-
-const ArticleDetailPage = ({ blog, relatedArticles }: { 
-  blog: Blog | null,
-  relatedArticles: RelatedArticle[] 
-}) => {
+const ArticleDetailPage = ({ blog }: { blog: Blog | null }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   
@@ -108,9 +98,9 @@ const ArticleDetailPage = ({ blog, relatedArticles }: {
 
       {/* Content Section */}
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 gap-12">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="w-full max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -152,64 +142,6 @@ const ArticleDetailPage = ({ blog, relatedArticles }: {
               </div>
             </div>
           </div>
-          
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <h3 className="text-xl font-bold text-white mb-6">{t('articles.relatedArticles')}</h3>
-                <div className="space-y-4">
-                  {relatedArticles.map((article, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 * index }}
-                    >
-                      <Card className="bg-zinc-900 border border-zinc-800 hover:border-white/20 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                        <CardContent className="p-4">
-                          <Link href={`/articles/${article.id}`}>
-                            <h4 className="text-white font-medium hover:text-gray-300 cursor-pointer">{article.title}</h4>
-                          </Link>
-                          <p className="text-gray-500 text-sm mt-1">{article.date}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="mt-12"
-              >
-                <Card className="bg-zinc-900 border border-zinc-800 overflow-hidden">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-4">{t('articles.subscribeToNewsletter')}</h3>
-                    <p className="text-gray-400 mb-4">{t('articles.newsletterDescription')}</p>
-                    <div className="space-y-3">
-                      <input 
-                        type="email" 
-                        placeholder={t('articles.yourEmail')}
-                        className="w-full bg-zinc-800 border border-zinc-700 text-white px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"
-                      />
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button className="w-full bg-white text-black hover:bg-gray-200 cursor-pointer">
-                          {t('articles.subscribe')}
-                        </Button>
-                      </motion.div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
         </div>
       </div>
       
@@ -236,20 +168,6 @@ const ArticleDetailPage = ({ blog, relatedArticles }: {
   );
 };
 
-// This is temporary until we have an API for related articles
-const relatedArticles: RelatedArticle[] = [
-  {
-    id: "future-b2b-digital-economy",
-    title: "The Future of B2B Sales in a Digital-First Economy",
-    date: "Jan 28, 2024"
-  },
-  {
-    id: "sales-process-converts",
-    title: "Building a Sales Process That Converts: A Step-by-Step Guide",
-    date: "Jan 15, 2024"
-  }
-];
-
 export const getServerSideProps: GetServerSideProps = async ({ params, locale }) => {
   try {
     const id = params?.id as string;
@@ -259,7 +177,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, locale })
     
     // Add mock HTML content for demonstration
     const blogData = response.data;
-    if (!blogData.htmlContent) {
+    if (blogData && !blogData.htmlContent) {
       blogData.htmlContent = `
         <div class="rich-html-content">
           <h3 class="text-2xl font-bold text-white mt-8 mb-4">HTML Content Section</h3>
@@ -280,8 +198,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, locale })
     return {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
-        blog: blogData,
-        relatedArticles
+        blog: blogData
       },
     };
   } catch (error) {
@@ -289,8 +206,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, locale })
     return {
       props: {
         ...(await serverSideTranslations(locale || 'en', ['common'])),
-        blog: null,
-        relatedArticles: []
+        blog: null
       },
     };
   }
